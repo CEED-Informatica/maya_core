@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Maya | Core",
-    'version': '0.1.0a',
+    'version': '17.0.2.0',
 
     'summary': """
         Módulo (Core) para la gestión interna del CEED (Ciclos Formativos)""",
@@ -9,8 +9,8 @@
     'description': """
         Módulo que simplifica y automatiza el trabajo de un centro de Ciclos Formativos a distancia.
         Implementa la funcionalidad básica que será utilizada por otras extensiones como:
-         - Maya | Convalidaciones: gestión de las convalidaciones,
-         - Maya | PFC: gestión del Proyecto Fin de Ciclo
+         - Maya | Valid: gestión de las convalidaciones,
+         - Maya | Report: Generación de informes
 
         Este módulo permite entre otras cosas
          - Control de profesores y sus roles
@@ -66,7 +66,7 @@
         # reports
         'reports/custom_footer.xml',
         'reports/school_calendar.xml',
-        'reports/paper_format.xml',  
+        'reports/paper_format.xml',
     ],
     'installable': True,
     'application': True,
