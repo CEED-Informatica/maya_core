@@ -182,12 +182,12 @@
               del modelo definido en el field model, en este caso maya_core.school_year  -->
             <button name="school_year_to_current_action" icon="fa-bookmark" 
               string="Convertir en curso actual" class="oe_highlight"
-              attrs="{'invisible': ['|', ('state','=', '2'), ('state','=', '1')] }"
+              invisible="state == '2' or state == '1'"
               type="object"
               confirm="ATENCIÓN: Convertir un curso en actual implica la desactivación de todos los usuarios. ¿Deseas continuar?"/>
             <button name="school_year_to_draft_action" icon="fa-pencil" 
               string="Convertir en borrador" class="oe_highlight"
-              attrs="{'invisible': ['|', ('state','=', '0'), ('state','=', '1')] }"
+              invisible="state == '0' or state == '1'"
               type="object"/>
             <!-- con la clase oe_edit_only solo  muestra el botón cuando edito el elemento -->
             <button name="create_task_action" icon="fa-cog" 
@@ -335,10 +335,10 @@
                 <tree>    
                   <field name="description"/>
                   <!-- hay que añadir el campo para poder trabajar con él en el código, pero queremos verlo -->
-                  <field name="key" attrs="{'column_invisible': [True]}"/>
+                  <field name="key" column_invisible="1"/>
                   <field name="date"/>
-                  <field name="date_end" attrs="{'invisible': [('duration','=',1)]}"/>
-                  <field name="duration" attrs="{'invisible': [('duration','=',1)]}"/>
+                  <field name="date_end" invisible="duration == 1"/>
+                  <field name="duration" invisible="duration == 1"/>
                 </tree>
               </field>
             </page>
@@ -352,7 +352,7 @@
                 <group></group>
               </group>
             </page>
-            <page string = "Tareas"  attrs="{'invisible': 1 }">
+            <page string = "Tareas" invisible="1">
               <field name = "cron_ids">
                 <tree>
                   <field name="name"/>
@@ -370,7 +370,7 @@
           </notebook>
         </form>
       </field>
-    </record> 
+    </record>  
 
     <record model="ir.ui.view" id="maya_core.cron_register_tree">
       <field name="name">Registro de plantillas de tareas programadas</field>
