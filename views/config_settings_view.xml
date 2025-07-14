@@ -1,21 +1,28 @@
 <odoo>
   <data>
+    <record id="action_config_settings_maya_core" model="ir.actions.act_window">
+      <field name="name">Ajustes de Maya</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.config.settings</field>
+      <field name="view_mode">form</field>
+      <field name="target">inline</field>
+      <field name="context">{'module' : 'maya_core', 'bin_size': False}</field>
+    </record>
 
-    <record model="ir.ui.view" id="maya_core.config_settings_view_form">
+    <record model="ir.ui.view" id="res_config_settings_view_form_maya">
       <field name="name">Configuración Maya</field>
       <field name="model">res.config.settings</field>
       <!-- hereda de la vista base de configuraciones --> 
       <field name="inherit_id" ref="base.res_config_settings_view_form" /> 
       <field name="arch" type="xml">
-      <!--  busca todos los nodos de tipo div con la clase settings 
+      <!--  busca todos los nodos de tipo app con el atributo name = general_settings
             inside (default): your values will be appended inside the tag
             after: add the content after the tag
             before: add the content before the tag
             replace: replace the content of the tag. -->
-        <xpath expr="//div[hasclass('settings')]" position="inside">
+        <xpath expr="//app[@name='general_settings']" position="after">
           <!-- string, el texto que aparecerá en el menu lateral-->
-          <div class="app_settings_block" data-string="Maya" id="Maya" string="Maya"
-          data-key="maya.action_config_settings">
+           <app data-string="Maya | Core" string="Maya | Core" name="maya_core">
             <h2>Moodle</h2>
             <div class="row mt16 o_settings_container" name="maya_core_moodle_setting_container">
               <!-- contenedor URL Moodle -->
@@ -40,11 +47,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </app>
         </xpath>
       </field>
     </record>
-
-    
   </data>
 </odoo>
