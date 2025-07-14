@@ -32,7 +32,7 @@
     'price': 0,
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'maya_report'],
+    'depends': ['base', 'mail', 'mail_bot' ,'maya_report'],
 
     # external dependencies that have to be installed. Can be python or bin dependencies
     # Only checks whether the dependency is installed. Not install the dependency!!
