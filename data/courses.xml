@@ -66,5 +66,11 @@
       <field name="code">899104</field>
       <field name="name">Gestión y Ventas de Espacios Comerciales</field>
     </record>
+
+    <record model="maya_core.course" id="maya_core.course_MIP">
+      <field name="abbr">MIP</field>
+      <field name="code">222104</field>
+      <field name="name">Marketing y publicidad</field>
+    </record>
   </data>
 </odoo>

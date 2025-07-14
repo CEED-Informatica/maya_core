@@ -115,30 +115,6 @@
     </record>
 	
 	  <!-- Módulos GEVEC -->
-    <record model="maya_core.subject" id="maya_core.subject_GEVEC_PMA">
-      <field name="abbr">PMA</field>
-      <field name="code">0930</field>
-      <field name="name">Políticas de marketing</field>
-      <field name="year">1</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC')])]"/>                      
-    </record>
-	
-    <record model="maya_core.subject" id="maya_core.subject_GEVEC_MD">
-      <field name="abbr">PM</field>
-      <field name="code">0931</field>
-      <field name="name">Marketing digital</field>
-      <field name="year">1</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC')])]"/>                      
-    </record>
-	
-    <record model="maya_core.subject" id="maya_core.subject_GEVEC_ICO">
-      <field name="abbr">ICO</field>
-      <field name="code">1010</field>
-      <field name="name">Investigación comerciaL</field>
-      <field name="year">1</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC')])]"/>       	  
-    </record>
-	
     <record model="maya_core.subject" id="maya_core.subject_GEVEC_FOL">
       <field name="abbr">FOL</field>
       <field name="code">0933</field>
@@ -187,13 +163,86 @@
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC')])]"/>                      
     </record>
 
+    <!-- Módulos MIP -->
+    <record model="maya_core.subject" id="maya_core.subject_MIP_DEMC">
+      <field name="abbr">DEMC</field>
+      <field name="code">1007</field>
+      <field name="name">Diseño y elaboración de material de comunicación</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>  
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIP_MSC">
+      <field name="abbr">MSC</field>
+      <field name="code">1008</field>
+      <field name="name">Medios y soportes de comunicación</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>  
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIP_RRPPOEM">
+      <field name="abbr">RRPPOEM</field>
+      <field name="code">1009</field>
+      <field name="name">Relaciones públicas y organización de eventos de marketing</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>  
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIP_TCIC">
+      <field name="abbr">TCIC</field>
+      <field name="code">1010</field>
+      <field name="name">Trabajo de campo en la investigación comercial</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>  
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIP_LPS">
+      <field name="abbr">LPS</field>
+      <field name="code">1109</field>
+      <field name="name">Lanzamiento de productos y servicios</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>  
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIP_ACCU">
+      <field name="abbr">ACCU</field>
+      <field name="code">1110</field>
+      <field name="name">Atención al cliente, consumidor y usuario</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>  
+    </record>
+
     <!-- Módulos MIX (Varios ciclos)-->
+    <record model="maya_core.subject" id="maya_core.subject_MIX_ICO">
+      <field name="abbr">ICO</field>
+      <field name="code">1010</field>
+      <field name="name">Investigación comerciaL</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP')])]"/>       	  
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIX_PMA">
+      <field name="abbr">PMA</field>
+      <field name="code">0930</field>
+      <field name="name">Políticas de marketing</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP')])]"/>                      
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIX_MD">
+      <field name="abbr">PM</field>
+      <field name="code">0931</field>
+      <field name="name">Marketing digital</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP')])]"/>                      
+    </record>
+
     <record model="maya_core.subject" id="maya_core.subject_MIX_GEFE">
       <field name="abbr">GEFE</field>
       <field name="code">0623</field>
       <field name="name">Gestión económica y financiera de la empresa</field>
       <field name="year">1</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC')])]"/> 
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP')])]"/> 
     </record>
 	
 	  <record model="maya_core.subject" id="maya_core.subject_MIX_GACI">
@@ -228,6 +277,20 @@
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC'), ref('maya_core.course_TIL')])]"/>
     </record>
 
-	
+	  <record model="maya_core.subject" id="maya_core.subject_MIX_DIGGSCYM">
+      <field name="abbr">DIGGSCYM</field>
+      <field name="code">1665020</field>
+      <field name="name">Digitalización aplicada al sistema productivo GS</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP')])]"/> 
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIX_SOSCYM">
+      <field name="abbr">SOSCYM</field>
+      <field name="code">1708020</field>
+      <field name="name">Sostenibilidad aplicada al sistema productivo</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP')])]"/> 
+    </record>
   </data>
 </odoo>

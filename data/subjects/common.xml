@@ -22,7 +22,7 @@
       <field name="code">0179</field>
       <field name="name">Inglés Profesional GS</field>
       <field name="year">1</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT'), ref('maya_core.course_GAT'),ref('maya_core.course_AVGE'), ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_AFI'), ref('maya_core.course_ADI'), ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT'), ref('maya_core.course_GAT'),ref('maya_core.course_AVGE'), ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP'), ref('maya_core.course_AFI'), ref('maya_core.course_ADI'), ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
     </record>
 
     <record model="maya_core.subject" id="maya_core.subject_MIX_LE2"> 
@@ -54,7 +54,7 @@
       <field name="code">1709</field>
       <field name="name">Itinerario personal para la empleabilidad I</field>
       <field name="year">1</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT'), ref('maya_core.course_GAT'),ref('maya_core.course_AVGE'), ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_AFI'), ref('maya_core.course_ADI'), ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT'), ref('maya_core.course_GAT'),ref('maya_core.course_AVGE'), ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP'), ref('maya_core.course_AFI'), ref('maya_core.course_ADI'), ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
     </record>
 
     <record model="maya_core.subject" id="maya_core.subject_MIX_IPE2"> 
@@ -62,7 +62,7 @@
       <field name="code">1710</field>
       <field name="name">Itinerario personal para la empleabilidad II</field>
       <field name="year">1</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT'), ref('maya_core.course_GAT'),ref('maya_core.course_AVGE'), ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_AFI'), ref('maya_core.course_ADI'), ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT'), ref('maya_core.course_GAT'),ref('maya_core.course_AVGE'), ref('maya_core.course_TIL'), ref('maya_core.course_CI'), ref('maya_core.course_GEVEC'), ref('maya_core.course_MIP'), ref('maya_core.course_AFI'), ref('maya_core.course_ADI'), ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
     </record>
   </data>
 </odoo>
