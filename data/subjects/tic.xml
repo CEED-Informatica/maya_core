@@ -276,5 +276,20 @@
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
     </record>
+
+     <record model="maya_core.subject" id="maya_core.subject_MIX_DIGGSIYC">
+      <field name="abbr">DIGGSIYC</field>
+      <field name="code">1665190</field>
+      <field name="name">Digitalización aplicada al sistema productivo GS</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIX_SOSIYC">
+      <field name="abbr">SOSIYC</field>
+      <field name="code">1708190</field>
+      <field name="name">Sostenibilidad aplicada al sistema productivo</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
   </data>
 </odoo>
