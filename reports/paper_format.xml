@@ -11,7 +11,5 @@
     <field name="header_line" eval="False"/>
     <field name="header_spacing">10</field>
     <field name="dpi">90</field>
-    <!-- lo relaciono con los informes que van a generarse con este formato. Es una relación one2may -->
-    <field name="report_ids" eval="[(6, 0, [ref('school_calendar_pdf_report')])]" />
   </record> 
 </odoo>

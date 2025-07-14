@@ -65,8 +65,8 @@
         'data/registered_cron_jobs.xml',
         # reports
         'reports/custom_footer.xml',
-        'reports/school_calendar.xml',
         'reports/paper_format.xml',
+        'reports/school_calendar.xml',
     ],
     'installable': True,
     'application': True,

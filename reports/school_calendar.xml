@@ -3,9 +3,9 @@
     string="Calendario escolar"
     model="maya_core.school_year"
     report_type="qweb-pdf"
-    file="maya_core.report_school_calendar"
     name="maya_core.report_school_calendar"
-    print_report_name="'Calendario escolar - %s' % (object.name)"/>
+    print_report_name="'Calendario escolar - %s' % (object.name)"
+    paperformat="maya_core.paperformat_a4_report_custom"/>
     
   <template id="report_school_calendar">
     <t t-call="web.html_container">
