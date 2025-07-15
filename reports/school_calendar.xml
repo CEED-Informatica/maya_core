@@ -1,85 +1,91 @@
 <odoo>
-  <report id="school_calendar_pdf_report"
-    string="Calendario escolar"
-    model="maya_core.school_year"
-    report_type="qweb-pdf"
-    name="maya_core.report_school_calendar"
-    print_report_name="'Calendario escolar - %s' % (object.name)"
-    paperformat="maya_core.paperformat_a4_report_custom"/>
+   <data>
+    <record id="school_calendar_pdf_report" model="ir.actions.report">
+      <field name="name">Calendario escolar</field>
+      <field name="model">maya_core.school_year</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_file">Calendario escolar</field>
+      <field name="print_report_name">f'Calendario escolar - {object.name}'</field>
+      <field name="report_name">maya_core.report_school_calendar</field>
+      <field name="binding_model_id" ref="model_maya_core_school_year"/>
+      <field name="binding_type">report</field>
+      <field name="paperformat_id" ref="paperformat_a4_report_custom"/>
+    </record>
     
-  <template id="report_school_calendar">
-    <t t-call="web.html_container">
-      <!-- por si se mandará a imprimir calendarios de varios cursos escolares -->
-      <t t-foreach="docs" t-as="record">
-        <t t-call="web.external_layout"> <!-- añade el header y el footer -->
-          <!-- wktmltopdf no lee los ficheros CSS externos, asi que hay que embeber el código
-               en la etiqueta style. Para poder disponer del código en un fichero externo
-               buscamos la etiqueta style e  insertamos el enlace al ficher .css  -->
-          <xpath expr="//style" position="after">
-            <link rel="stylesheet" href="/maya_core/static/css/school_calendar_report.css"/>
-          </xpath>
-          <style/>
-          <div class="page">
-            <h2>Calendario escolar Ciclos Formativos</h2>
-            <div class="calendar">
-              <t t-foreach="months_cal[record.id]" t-as="m">
-                <div class="grid-month col-4">
-                  <!-- Utilizo t-raw ya que voy a insertar directamente HTML a renderizar 
-                       t-esc mostraría el HTML como texto, no como código 
-                       t-field muestra un campo del record 
-                       OJO! obsoletas en versión 16 y superior -->
-                  <span t-raw="m"/>
-                </div>
-              </t>
-              <div class="grid-month legend col-4">
-                <div class="row">
-                  <div class="col-12 legend-title-container">
-                    <h2>
-                      Leyenda del calendario
-                    </h2>
+    <template id="report_school_calendar">
+      <t t-call="web.html_container">
+        <!-- por si se mandará a imprimir calendarios de varios cursos escolares -->
+        <t t-foreach="docs" t-as="record">
+          <t t-call="web.external_layout"> <!-- añade el header y el footer -->
+            <!-- wktmltopdf no lee los ficheros CSS externos, asi que hay que embeber el código
+                en la etiqueta style. Para poder disponer del código en un fichero externo
+                buscamos la etiqueta style e  insertamos el enlace al ficher .css  -->
+            <xpath expr="//style" position="after">
+              <link rel="stylesheet" href="/maya_core/static/css/school_calendar_report.css"/>
+            </xpath>
+            <style/>
+            <div class="page">
+              <h2>Calendario escolar Ciclos Formativos</h2>
+              <div class="calendar">
+                <t t-foreach="months_cal[record.id]" t-as="m">
+                  <div class="grid-month col-4">
+                    <!-- Utilizo t-raw ya que voy a insertar directamente HTML a renderizar 
+                        t-esc mostraría el HTML como texto, no como código 
+                        t-field muestra un campo del record 
+                        OJO! obsoletas en versión 16 y superior -->
+                    <span t-raw="m"/>
                   </div>
-                </div>
+                </t>
+                <div class="grid-month legend col-4">
+                  <div class="row">
+                    <div class="col-12 legend-title-container">
+                      <h2>
+                        Leyenda del calendario
+                      </h2>
+                    </div>
+                  </div>
 
-                <div class="row">
-                  <div class="offset-2 col-2">
-                    <div class="legend-square P-type"></div>
+                  <div class="row">
+                    <div class="offset-2 col-2">
+                      <div class="legend-square P-type"></div>
+                    </div>
+                    <div class="col-8">
+                      <span>Fechas de <strong>Primero</strong></span>
+                    </div>
                   </div>
-                  <div class="col-8">
-                    <span>Fechas de <strong>Primero</strong></span>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="offset-2 col-2">
-                    <div class="legend-square S-type"></div>
+                  <div class="row">
+                    <div class="offset-2 col-2">
+                      <div class="legend-square S-type"></div>
+                    </div>
+                    <div class="col-8">
+                      <span>Fechas de <strong>Segundo</strong></span>
+                    </div>
                   </div>
-                  <div class="col-8">
-                    <span>Fechas de <strong>Segundo</strong></span>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="offset-2 col-2">
-                    <div class="legend-square G-type"></div>
+                  <div class="row">
+                    <div class="offset-2 col-2">
+                      <div class="legend-square G-type"></div>
+                    </div>
+                    <div class="col-8">
+                      <span>Fechas <strong>Generales</strong></span>
+                    </div>
                   </div>
-                  <div class="col-8">
-                    <span>Fechas <strong>Generales</strong></span>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="offset-2 col-2">
-                    <div class="legend-square H-type"><span>1-31</span></div>
-                  </div>
-                  <div class="col-8">
-                    <span>Fechas <strong>No lectivos</strong></span>
+                  <div class="row">
+                    <div class="offset-2 col-2">
+                      <div class="legend-square H-type"><span>1-31</span></div>
+                    </div>
+                    <div class="col-8">
+                      <span>Fechas <strong>No lectivos</strong></span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div> 
-          </div>
+              </div> 
+            </div>
+          </t>
         </t>
       </t>
-    </t>
-  </template>
+    </template>
+  </data>
 </odoo>
