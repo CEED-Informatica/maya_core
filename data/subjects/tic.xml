@@ -291,5 +291,7 @@
       <field name="name">Sostenibilidad aplicada al sistema productivo</field>
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
+    </record>
+    
   </data>
 </odoo>
