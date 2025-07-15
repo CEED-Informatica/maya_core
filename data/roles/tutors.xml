@@ -109,10 +109,31 @@
       <field name="departament_id" ref="maya_core.departament_COM" />
     </record>
 
+     <record model="maya_core.rol" id="maya_core.rol_TUT1MIP">
+      <field name="rol">TUT1</field>
+      <field name="description">Tutor de primero de MIP</field>
+      <field name="course_id" ref="maya_core.course_MIP" />
+      <field name="departament_id" ref="maya_core.departament_COM" />
+    </record>
+
+     <record model="maya_core.rol" id="maya_core.rol_TUT1TIL">
+      <field name="rol">TUT1</field>
+      <field name="description">Tutor de primero de TIL</field>
+      <field name="course_id" ref="maya_core.course_TIL" />
+      <field name="departament_id" ref="maya_core.departament_COM" />
+    </record>
+
     <record model="maya_core.rol" id="maya_core.rol_TUT2TIL">
       <field name="rol">TUT2</field>
       <field name="description">Tutor de segundo de TIL</field>
       <field name="course_id" ref="maya_core.course_TIL" />
+      <field name="departament_id" ref="maya_core.departament_COM" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_core.rol_TUT2MIP">
+      <field name="rol">TUT2</field>
+      <field name="description">Tutor de segundo de MIP</field>
+      <field name="course_id" ref="maya_core.course_MIP" />
       <field name="departament_id" ref="maya_core.departament_COM" />
     </record>
 
@@ -148,6 +169,13 @@
       <field name="rol">TUTFCT</field>
       <field name="description">Tutor de FCT GVEC</field>
       <field name="course_id" ref="maya_core.course_GEVEC" />
+      <field name="departament_id" ref="maya_core.departament_COM" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_core.rol_TUTFCTMIP">
+      <field name="rol">TUTFCT</field>
+      <field name="description">Tutor de FCT MIP</field>
+      <field name="course_id" ref="maya_core.course_MIP" />
       <field name="departament_id" ref="maya_core.departament_COM" />
     </record>
 
