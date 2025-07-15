@@ -66,7 +66,7 @@ class SchoolCalendarReport(models.AbstractModel):
       months_calendar[doc.id] = []
 
       for month in months:
-        month_cal = html_cal.formatmonth(doc.date_init.year + 1  if month <7 else doc.date_init.year, month)
+        month_cal = html_cal.formatmonth(doc.date_init.year + 1  if month <8 else doc.date_init.year, month)
 
         # fechas de school_year.dates que son del mes month
         # enumerate convierte una lista en un diccionario con key indices: 0,1,2,3...
