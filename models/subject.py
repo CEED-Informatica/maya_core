@@ -8,10 +8,11 @@ class Subject(models.Model):
   _name = 'maya_core.subject'
   _description = 'Módulo de un ciclo formativo'
 
-  abbr = fields.Char(size = 4, required = True, translate = True, string = "Abreviatura")
+  abbr = fields.Char(size = 8, required = True, translate = True, string = "Abreviatura")
   code = fields.Char(size = 6, required = True, string = "Código")
   name = fields.Char(required = True, translate = True, string = "Nombre")
   year = fields.Selection([('1', '1º'), ('2', '2º')], required = True, default = '1', string = 'Curso')
+  optional = fields.Boolean(default = False)
 
   courses_ids = fields.Many2many('maya_core.course', string = 'Ciclos', help = 'Ciclos en los que se imparte')
 

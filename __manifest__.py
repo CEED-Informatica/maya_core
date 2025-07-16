@@ -60,6 +60,7 @@
         'data/subjects/hit.xml',
         'data/subjects/cim.xml',
         'data/subjects/common.xml',
+        'data/subjects/optional.xml',
         'data/roles/headquarters.xml',
         'data/roles/tutors.xml',
         'data/registered_cron_jobs.xml',
