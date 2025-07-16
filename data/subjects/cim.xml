@@ -48,7 +48,23 @@
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_TIL')])]"/>                      
     </record>
-		
+
+    <record model="maya_core.subject" id="maya_core.subject_TIL_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0630p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_TIL')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_TIL_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0630</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_TIL')])]"/>                            
+    </record>
+
     <!-- Módulos CI -->
     <record model="maya_core.subject" id="maya_core.subject_CI_FOL">
       <field name="abbr">FOL</field>
@@ -113,7 +129,23 @@
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_CI')])]"/>                      
     </record>
-	
+
+    <record model="maya_core.subject" id="maya_core.subject_CI_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0828p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_CI')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_CI_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0828</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_CI')])]"/>                            
+    </record>
+
 	  <!-- Módulos GEVEC -->
     <record model="maya_core.subject" id="maya_core.subject_GEVEC_FOL">
       <field name="abbr">FOL</field>
@@ -163,6 +195,22 @@
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC')])]"/>                      
     </record>
 
+    <record model="maya_core.subject" id="maya_core.subject_GEVEC_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0932p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_GEVEC_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0932</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GEVEC')])]"/>                            
+    </record>
+
     <!-- Módulos MIP -->
     <record model="maya_core.subject" id="maya_core.subject_MIP_DEMC">
       <field name="abbr">DEMC</field>
@@ -210,6 +258,22 @@
       <field name="name">Atención al cliente, consumidor y usuario</field>
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>  
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIP_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">1012p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_MIP_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">1012</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>                            
     </record>
 
     <!-- Módulos MIX (Varios ciclos)-->

@@ -49,6 +49,22 @@
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT')])]"/>                            
     </record>
 
+    <record model="maya_core.subject" id="maya_core.subject_GIAT_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0388p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_GIAT_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0388</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GIAT')])]"/>                            
+    </record>
+
     <!-- Módulos GAT -->
     <record model="maya_core.subject" id="maya_core.subject_GAT_DAT"> 
       <field name="abbr">DAT</field>
@@ -114,6 +130,22 @@
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GAT')])]"/>                            
     </record>
 
+    <record model="maya_core.subject" id="maya_core.subject_GAT_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0181p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GAT')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_GAT_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0181</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_GAT')])]"/>                            
+    </record>
+
     <!-- Módulos AVGE-->
     <record model="maya_core.subject" id="maya_core.subject_AVGE_FOL"> 
       <field name="abbr">FOL</field>
@@ -159,6 +191,22 @@
       <field name="abbr">PRY</field>
       <field name="code">0400</field>
       <field name="name">Proyecto de Agencias de viajes y gestión de eventos</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_AVGE')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_AVGE_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0400p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_AVGE')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_AVGE_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0400</field>
+      <field name="name">Proyecto Intermodular 2</field>
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_AVGE')])]"/>                            
     </record>

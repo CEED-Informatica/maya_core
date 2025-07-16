@@ -57,6 +57,22 @@
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_AFI')])]"/>
     </record>
 
+    <record model="maya_core.subject" id="maya_core.subject_AFI_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0657p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_AFI')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_AFI_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0657</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_AFI')])]"/>                            
+    </record>
+
     <!-- Módulos ADI -->
     <record model="maya_core.subject" id="maya_core.subject_ADI_PE">
       <field name="abbr">PE</field>
@@ -96,6 +112,22 @@
       <field name="name">Formación y orientación laboral</field>
       <field name="year">1</field>  
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_ADI')])]"/>
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_ADI_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0664p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_ADI')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_ADI_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0664</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_ADI')])]"/>                            
     </record>
 
     <!-- Módulos MIX (Varios ciclos)-->

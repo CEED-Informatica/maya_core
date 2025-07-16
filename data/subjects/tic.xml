@@ -57,6 +57,22 @@
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAW')])]"/>                            
     </record>
 
+    <record model="maya_core.subject" id="maya_core.subject_DAW_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0616p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAW')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_DAW_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0616</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAW')])]"/>                            
+    </record>
+
     <!-- Módulos DAM -->
     <record model="maya_core.subject" id="maya_core.subject_DAM_FOL">
       <field name="abbr">FOL</field>
@@ -118,6 +134,22 @@
       <field name="abbr">SGE</field>
       <field name="code">0491</field>
       <field name="name">Sistemas de gestión empresarial</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAM')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_DAM_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0492p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAM')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_DAM_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0492</field>
+      <field name="name">Proyecto Intermodular 2</field>
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAM')])]"/>                            
     </record>
@@ -220,6 +252,23 @@
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_ASIR')])]"/>                            
     </record>
 
+      <record model="maya_core.subject" id="maya_core.subject_ASIR_PI1">
+      <field name="abbr">PI1</field>
+      <field name="code">0379p</field>
+      <field name="name">Proyecto Intermodular 1</field>
+      <field name="year">1</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_ASIR')])]"/>                            
+    </record>
+
+    <record model="maya_core.subject" id="maya_core.subject_ASIR_PI2">
+      <field name="abbr">PI2</field>
+      <field name="code">0379</field>
+      <field name="name">Proyecto Intermodular 2</field>
+      <field name="year">2</field>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_ASIR')])]"/>                       
+    </record>
+
+
     <!-- Módulos MIX (Varios ciclos)-->
     <record model="maya_core.subject" id="maya_core.subject_MIX_SIN">
       <field name="abbr">SIN</field>
@@ -292,6 +341,6 @@
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_DAW'), ref('maya_core.course_DAM'), ref('maya_core.course_ASIR')])]"/>
     </record>
-    
+
   </data>
 </odoo>
