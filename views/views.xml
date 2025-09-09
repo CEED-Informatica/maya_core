@@ -49,6 +49,7 @@
           <field name="name"/>
           <field name="abbr"/>
           <field name="code"/>
+          <field name="optional"/>
           <field name="courses_ids" widget="many2many_tags"/>
         </tree>
       </field>
