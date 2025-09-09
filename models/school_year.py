@@ -389,19 +389,13 @@ class SchoolYear(models.Model):
       else: 
         record.date_extraord2_exam_end = record.date_extraord2_exam_ini + datetime.timedelta(days = 4)
   
-  @api.depends('date_ord2_exam_ini')
+  @api.depends('date_init')
   def _compute_cancellation2(self):
     for record in self:
-      christmas_holiday = next((holiday for holiday in record.holidays_ids if holiday.key == 'navidad'), None)
-      
-      if record.date_ord2_exam_ini == False:
+      if record.date_init == False:
         record.date_cancellation2 = ''
-      else: 
-        record.date_cancellation2 = datetime.datetime(record.date_ord2_exam_ini.year, 1, record.date_ord2_exam_ini.day)
-        if christmas_holiday == None:
-          continue
-        elif (record.date_cancellation2 >= christmas_holiday.date and record.date_cancellation2 <= christmas_holiday.date_end):
-          record.date_cancellation2 = christmas_holiday.date_end + datetime.timedelta(days = 1)
+      else:
+        record.date_cancellation2 = datetime.datetime(record.date_init.year, 12, 31)
         
   @api.depends('date_ord2_exam_ini')
   def _compute_waiver_ord2(self):
@@ -602,13 +596,13 @@ class SchoolYear(models.Model):
       else: 
         record.date_extraord1_exam_end = record.date_extraord1_exam_ini + datetime.timedelta(days = 4)
   
-  @api.depends('date_ord1_exam_ini')
+  @api.depends('date_init')
   def _compute_cancellation1(self):
     for record in self:
-      if record.date_ord1_exam_ini == False:
+      if record.date_init == False:
         record.date_cancellation1 = ''
-      else: 
-        record.date_cancellation1 = datetime.datetime(record.date_ord1_exam_ini.year, record.date_ord1_exam_ini.month - 2, record.date_ord1_exam_ini.day)
+      else:
+        record.date_cancellation1 = datetime.datetime(record.date_init.year, 12, 31)
         
   @api.depends('date_ord1_exam_ini')
   def _compute_waiver_ord1(self):
