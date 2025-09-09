@@ -54,7 +54,7 @@
       <field name="name">Ofimática en la gestión económica y comercial de una empresa</field>
       <field name="year">2</field>
       <field name="optional">True</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_CI'), ref('maya_core.course_TIL'), ref('maya_core.course_MIP'), ref('maya_core.course_GVEC')])]"/>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_CI'), ref('maya_core.course_TIL'), ref('maya_core.course_MIP'), ref('maya_core.course_GEVEC')])]"/>
     </record>
 
     <record model="maya_core.subject" id="maya_core.subject_OPT_INGOCYM">
@@ -63,12 +63,12 @@
       <field name="name">Inglés oral para entornos profesionales</field>
       <field name="year">2</field>
       <field name="optional">True</field>
-      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_CI'), ref('maya_core.course_TIL'), ref('maya_core.course_MIP'), ref('maya_core.course_GVEC')])]"/>
+      <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_CI'), ref('maya_core.course_TIL'), ref('maya_core.course_MIP'), ref('maya_core.course_GEVEC')])]"/>
     </record>
 
      <!-- Módulos optativos CYM -->
     <record model="maya_core.subject" id="maya_core.subject_OPT_CFCTG">
-      <field name="abbr">CFCTG</field>
+      <field name="abbr">CGCTG</field>
       <field name="code">CVOPS039</field>
       <field name="name">Creación y gestión de contenidos turísticos y gastronómicos</field>
       <field name="year">2</field>
