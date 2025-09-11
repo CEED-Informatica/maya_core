@@ -979,7 +979,7 @@ class SchoolYear(models.Model):
               '/{}'.format(subject.year) if len(list(distinct_subject_tut)) > 1 else '')
         """ task_data = self.cron_template2task(cron_template, task_name, str(job_data)) """
 
-        job_data = { 'validation_classroom_id': classroom_id.moodle_id,
+        job_data = { 'classroom_id': classroom_id.moodle_id,
                      'course_id': course.id,
                      'subject_id': subject.id}
 
