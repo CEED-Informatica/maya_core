@@ -94,9 +94,7 @@ class Employee(models.Model):
     """
     Actualiza en la base de datos un registro
     """
-    roles_validators = self.env['maya_core.rol'].search([('rol','=','CONV')])
-    roles_head_CF = self.env['maya_core.rol'].search([('rol','=','JFCF')])
-    roles_coord_CF = self.env['maya_core.rol'].search([('rol','=','CRDCF')])
+    res = super(Employee, self).write(vals)
 
     if 'roles_ids' in vals:
       # el simple hecho de que no existan convalidadores si no está el módulo maya_valid instalado
@@ -104,16 +102,23 @@ class Employee(models.Model):
       # maya_valid_installed = self.env['ir.module.module'].search([('name', '=', 'maya_valid')])
       # if not maya_valid_installed or maya_valid_installed.state != 'installed':
       # o algo parecido
-      if any([rol.id in vals['roles_ids'][0][2] for rol in roles_validators]): # es validador
-        self.env.ref('maya_valid.group_VALID').write({'users': [(4, self.user_id.id, 0)]})
-      else: # no lo es
-        self.env.ref('maya_valid.group_VALID').write({'users': [(3, self.user_id.id, 0)]})
+      roles_validators = self.env['maya_core.rol'].search([('rol', '=', 'CONV')])
+      roles_head_CF = self.env['maya_core.rol'].search([('rol', '=', 'JFCF')])
+      roles_coord_CF = self.env['maya_core.rol'].search([('rol', '=', 'CRDCF')])
 
-      if any([rol.id in vals['roles_ids'][0][2] for rol in roles_head_CF]) or \
-         any([rol.id in vals['roles_ids'][0][2] for rol in roles_coord_CF]):  # es Jefatura de ciclos o coord ciclos
-        self.env.ref('maya_core.group_MNGT_FP').write({'users': [(4, self.user_id.id, 0)]})
-      else: # no lo es
-        self.env.ref('maya_core.group_MNGT_FP').write({'users': [(3, self.user_id.id, 0)]})
-        
+      # Lógica para grupos de validador (CONV)
+      is_validator = any(rol in self.roles_ids for rol in roles_validators)
+      if is_validator:
+          self.env.ref('maya_valid.group_VALID').write({'users': [(4, self.user_id.id, 0)]})
+      else:
+          self.env.ref('maya_valid.group_VALID').write({'users': [(3, self.user_id.id, 0)]})
 
-    return super(Employee, self).write(vals)
+      # Lógica para grupos de gestión de ciclos (JFCF y CRDCF)
+      is_mgmt_fp = any(rol in self.roles_ids for rol in roles_head_CF) or \
+                  any(rol in self.roles_ids for rol in roles_coord_CF)
+      if is_mgmt_fp:
+          self.env.ref('maya_core.group_MNGT_FP').write({'users': [(4, self.user_id.id, 0)]})
+      else:
+          self.env.ref('maya_core.group_MNGT_FP').write({'users': [(3, self.user_id.id, 0)]})
+
+    return res
