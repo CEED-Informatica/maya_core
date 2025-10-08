@@ -238,7 +238,7 @@
 
     <record model="maya_core.subject" id="maya_core.subject_MIP_TCIC">
       <field name="abbr">TCIC</field>
-      <field name="code">1010</field>
+      <field name="code">1011</field>
       <field name="name">Trabajo de campo en la investigación comercial</field>
       <field name="year">2</field>
       <field name="courses_ids" eval="[(6, 0, [ref('maya_core.course_MIP')])]"/>  
