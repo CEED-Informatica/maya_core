@@ -1,0 +1,19 @@
+# Paquetes necesarios
+
+# Instalación en local
+#
+#     1. Crear entorno virtual
+#        >  python3 -m venv .venv
+#
+#     2. Activar el entorno virtual
+#        2.1 Linux
+#        >   source .venv/bin/activate
+#
+#     3. Instalar
+#        >   pip3 install -r requirements.txt
+
+tabula-py
+dotenv
+paramiko
+pandas
+JPype1

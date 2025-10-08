@@ -1,0 +1,14 @@
+services:
+  upload_itaca_students:
+    # Construye la imagen usando el Dockerfile de este directorio
+    build: . 
+    # El directorio local ./data se monta en /app/data de dentro del contenedor
+    # Dentro dejaré los ficheros fuentes (xml y pdf) y el resultado
+    volumes:
+      - ./data:/app/data
+      # El archivo .env.config en el host se monta como .env dentro del contenedor
+      - ./.env.config:/app/.env
+      # El archivo main.py lo monto para poder modificarlo con el contenedor arrancado
+      - ./main.py:/app/main.py
+    
+    # remove: true 
