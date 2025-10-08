@@ -5,8 +5,10 @@ import paramiko
 import argparse
 import shutil
 import xml.etree.ElementTree as ET
-import pandas as pd
-import tabula 
+
+# ignoro los warning con # type: ignore ya que se ejecuta en el contenedor
+import pandas as pd   # type: ignore
+import tabula         # type: ignore
 
 def validate_filter_studies(value):
   """
@@ -30,7 +32,7 @@ def students_xml2csv(xml_filename, filter = None, headers_included = []) -> tupl
       filter (str): 5 (FP), FPA (7), BA (4), ALL (-1): filtrado por enseñanza
   """
 
-  print(f'\n================== XML ==================')
+  print(f'\n================== XML ==================\n')
   print(f"\033[0;34m[INFO]\033[0m Procesando XML: '{xml_filename}'...")
 
   headers = []
@@ -79,7 +81,7 @@ def students_xml2csv(xml_filename, filter = None, headers_included = []) -> tupl
     students_data.append(row)
 
   print(f'\033[0;32m[OK]\033[0m XML procesado. Datos:')
-  print(f'\n   - Alumnos totales: {len(students)}\n   - Alumnos filtro ({filter}): {len(students_data)}')
+  print(f'\n   - Alumnos totales: {len(students)}\n   - Alumnos con filtro {filter} (1): {len(students_data)}\n\n     (1) Puede haber alumnos repetidos.')
 
   return students_data, headers
  
@@ -96,7 +98,7 @@ def read_table_from_pdf(pdf_filename: str) -> pd.DataFrame:
   Returns:
       pd.DataFrame: DataFrame combinado con columnas ['NIA_pdf', 'email_corporativo'].
   """
-  print(f'\n================== PDF ==================')
+  print(f'\n================== PDF ==================\n')
   print(f"\033[0;34m[INFO]\033[0m Procesando PDF: '{pdf_filename}' con tabula-py...")
 
   try:
@@ -140,12 +142,14 @@ def read_table_from_pdf(pdf_filename: str) -> pd.DataFrame:
           valid_tables.append(df_emails)
           # print(f"\033[0;32m[OK]\033[0m Tabla {idx+1} añadida ({len(df_emails)} registros).")
 
+
       except Exception as e:
         print(f"\033[0;31m[ERROR]\033[0m Procesando tabla {idx+1}: {e}")
 
     # Combina todas las tablas válidas
     if valid_tables:
       df_combined = pd.concat(valid_tables, ignore_index=True)
+
       print(f"\033[0;32m[OK]\033[0m Extracción PDF completada. Datos:")
       print(f"\n   - Tablas válidas: {len(valid_tables)}\n   - Registros: {len(df_combined)}")
       return df_combined
@@ -224,7 +228,7 @@ if df_emails.empty:
   print('\033[0;34m[INFO]\033[0m No se pudo obtener la tabla de correos corporativos del PDF.')
   
 # Paso 3 -> Unión (merge por NIA)
-print(f'\n================== JOIN ==================')
+print(f'\n================== JOIN =================\n')
 df_students = pd.DataFrame(students_data)
 df_students['NIA'] = df_students['NIA'].astype(str).str.strip()
 df_emails['NIA_pdf'] = df_emails['NIA_pdf'].astype(str).str.strip()
@@ -241,12 +245,19 @@ df_merged.drop(columns=['NIA_pdf'], inplace=True)
 if 'email_corporativo' not in base_headers:
     base_headers.append('email_corporativo')
 
+# Calculo datos para un informe estadístico final
+unique_nia_count = df_merged['NIA'].nunique()
+unique_students =  df_students['NIA'].nunique()
+
 emails_merged_count = df_merged['email_corporativo'].notna().sum()
-print(f'\033[0;32m[OK]\033[0m JOIN realizado. Datos sobre correos corporativos:')
-print(f'\n   - Encontrados para vincular:  {len(df_merged)}\n   - Vinculados: {emails_merged_count}')
+print(f'\033[0;32m[OK]\033[0m JOIN realizado. Datos:')
+print(f'\n   - Alumnos (sin repeticiones): {unique_students}\n   - Correos encontrados para vincular:  {len(df_merged)}')
+print(f'   - Correos repetidos:  {len(df_merged) - unique_nia_count}')
+print(f'   - Alumnado con correo corporativo (1): {unique_students- len(df_merged) + emails_merged_count}\n   - Alumnado sin correo corporativo (2): {len(df_merged) - emails_merged_count}')
+print(f'\n     (1) Casos de éxito.\n     (2) Posiblemente dados de baja.')
 
 # Paso 4 -> creación del CSV
-print(f'\n=============== Creación CSV ===============\n')
+print(f'\n============== Creación CSV =============\n')
 local_file_path = './data/temp.csv'
 try:
     df_merged.to_csv(local_file_path, index=False, encoding='utf-8')
@@ -255,15 +266,15 @@ except Exception as e:
     print(f"\033[0;31m[ERROR]\033[0m Error al escribir CSV: {e}")
 
 
-print(f'\n================== Copia ==================\n')
+print(f'\n================= Copia =================\n')
 try:
   if args.no_ssh:
-    # Copia el archivo localmente en la carpeta indicada por remote_folder
-    os.makedirs(remote_folder, exist_ok=True)
+    """ Copia el archivo localmente en la carpeta indicada por remote_folder
+      os.makedirs(remote_folder, exist_ok=True)
     dest_path = os.path.join(remote_folder, os.path.basename(local_file_path))
 
-    shutil.copy(local_file_path, dest_path)
-    print(f"\033[0;32m[OK]\033[0m Archivo copiado localmente a: {dest_path}")
+    shutil.copy(local_file_path, dest_path) """
+    print(f"\033[0;32m[OK]\033[0m Archivo copiado en: {local_file_path}")
   else:
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -276,7 +287,7 @@ try:
     print(f'\033[0;34m[OK]\033[0m Archivo copiado vía SSH a: {remote_path}')
 except Exception as e:
     print(f"\033[0;31m[ERROR]\033[0m {e}")
-    if "[Errno 13]" in e:
+    if "[Errno 13]" in str(e):
       print('\033[0;34m[INFO]\033[0m Comprueba los permisos de REMOTE_FOLDER. Desde el servidor de Maya')
       print('\033[0;34m[INFO]\033[0m >   docker exec -it <nombre_contenedor_odoo> id odoo')
       print('\033[0;34m[INFO]\033[0m >   sudo chown -R <uid>:<gid> /home/administrador/maya/.server-info/odoo/repo')
