@@ -5,3 +5,4 @@ toolz
 pycurl
 moodleteacher
 PyMuPDF
+tabulate

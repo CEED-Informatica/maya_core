@@ -4,6 +4,7 @@
 import xmlrpc.client
 import csv
 import sys, argparse
+from tabulate import tabulate
 
 def print_dictionary(dictionary):
   """
@@ -73,10 +74,12 @@ with open(args.csv_filename) as csv_file:
   for row in csv_reader:
     if line_count > 0:
       classrooms.append({
+          'moodle_id': row[0],
           'code': row[1],
           'description': row[2],
-          'moodle_id': row[0],
-          'lang_id': row[3]
+          'course': row[3],
+          'subject': row[4],
+          'lang_id': row[5]
       })
     line_count += 1
 
@@ -136,19 +139,21 @@ for classroom in classrooms:
     if classroom['lang_id'] not in languages:
       print(f'   \033[0;31m[ERROR]\033[0m ({classroom["code"]}) {classroom["lang_id"]} no existe o no está activo en Maya. Asignando idioma por defecto {languages[0]}.')
       classroom['lang_id'] = languages[0]
-
+    
     # ide del idioma
     classroom_lang = next((lang['id'] for lang in languages_output if lang['code'] == classroom['lang_id']),None)
-
+    
     # Existe ya Maya?
     classroom_exist = next((item for item in current_classrooms if item['code'] == classroom['code']), None)
     
     code_blocks = classroom['code'].split('_')
-    classroom['description'] = f'Aula de {classroom["description"]} ({courses[code_blocks[-2]]["abbr"]})' 
+    classroom['description'] = f'Aula de {classroom["description"]} ({courses[classroom["course"]]["abbr"]})' 
 
     if classroom_exist == None: # no está ya en Maya 
       classroom['lang_id'] = classroom_lang  
-      classroom_id = models.execute_kw(db, uid, password, 'maya_core.classroom', 'create', [classroom])
+      input_data = {  'moodle_id': classroom['moodle_id'], 'code': classroom['code'],
+                      'description': classroom['description'], 'lang_id': classroom['lang_id']}
+      classroom_id = models.execute_kw(db, uid, password, 'maya_core.classroom', 'create', [input_data])
     else: # ya está en Maya
       print(f'   \033[0;32m[INFO]\033[0m {classroom["code"]} ya existe en Maya. Actualizándolo')
 
@@ -160,7 +165,6 @@ for classroom in classrooms:
                                             'moodle_id': classroom['moodle_id']}])
       
       classroom_id = classroom_exist['id']
-    
     # relación con módulos
     if code_blocks[-1] == 'TU02CF' or code_blocks[-1] == 'TU01CF':  # en versiones anteriores de aules se nombraban así
     # if code_blocks[-1] == 'TUT0':  # aula de tutoria común para primero y segundo 
@@ -169,8 +173,9 @@ for classroom in classrooms:
       link_subject_course_classroom(courses[code_blocks[-2]]['id'], subjects['TUT2']['id'], classroom_id)
       print(f'   \033[0;32m[INFO]\033[0m Asociado {classroom["code"]} con el módulo {subjects["TUT2"]["abbr"]} en {courses[code_blocks[-2]]["abbr"]}')
     else:
-      link_subject_course_classroom(courses[code_blocks[-2]]['id'], subjects[code_blocks[-1]]['id'], classroom_id)
-      print(f'   \033[0;32m[INFO]\033[0m Asociado {classroom["code"]} con el módulo {subjects[code_blocks[-1]]["abbr"]} en {courses[code_blocks[-2]]["abbr"]}')
+      # link_subject_course_classroom(courses[code_blocks[-2]]['id'], subjects[code_blocks[-1]]['id'], classroom_id)
+      link_subject_course_classroom(courses[classroom['course']]['id'], subjects[classroom['subject']]['id'], classroom_id)
+      print(f'   \033[0;32m[INFO]\033[0m Asociado {classroom["code"]} con el módulo {subjects[classroom["subject"]]["abbr"]} en {courses[classroom["course"]]["abbr"]}')
 
     line_count_OK += 1
 
@@ -182,4 +187,30 @@ for classroom in classrooms:
     line_count_ERROR += 1
 
 print(f'\033[0;32m[INFO]\033[0m Procesados {line_count_OK} aulas virtuales / Errores: {line_count_ERROR}.')
-print(f'\033[0;32m[INFO]\033[0m Hay que repasar y asignar las aulas de inglés técnico con los módulos correspondientes.')
+
+## Impresión de las tablas de estado de las ulas en Maya
+print(f'\033[0;32m[INFO]\033[0m Estado aulas introducidas en Maya')
+current_classrooms_rel = models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'search_read', 
+                                           [[]], { 'fields': ['course_id', 'subject_id', 'classroom_id']})
+
+""" print(current_classrooms_rel) """
+for cur in courses_output:
+  header_course = "="*45 + f" {cur['abbr']} " + "="*45
+  print("\n" + header_course.center(180))
+  data = []
+  subjects_course = models.execute_kw(db, uid, password, 'maya_core.subject', 'search_read', [[['courses_ids', 'in', [cur['id']]]]],
+                           { 'fields': ['id', 'code', 'abbr', 'name']})
+                          
+  headers = [subject['abbr'] for subject in subjects_course]
+  for subject in subjects_course:
+    """  print(subject)
+    print(cur) """
+    is_ok = any(relation['course_id'][0] == cur['id'] and relation['subject_id'][0] == subject['id'] for relation in current_classrooms_rel)
+    if is_ok:
+      data.append('\033[0;32mO\033[0m')
+    else:
+      data.append('\033[0;31mX\033[0m')
+  
+  classroom_table = tabulate([data], headers=headers, tablefmt="simple", stralign="center")
+
+  print(classroom_table)

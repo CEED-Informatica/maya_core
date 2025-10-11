@@ -1,3 +1,5 @@
-id,code,description,lang,comment
-2,SEG9_CEE_46025799_2022_836104_TU02CF,Tutoria,es_ES,## DAM
-4,SEG9_CEE_46025799_2022_836104_0373,Lenguajes de Marca,es_ES
+id,code,description,course,subject,lang,comment
+2094,SEG9_CEE_46025799_2022_836104_TU02CF,Tutoria,836104,TUT0,es_ES,## DAM
+2081,CEE_46025799_2023_836104_0491,Sistemas de Gestión Empresarial,836104,0491,es_ES,## DAM
+4725,Projecte intermodular 2,Projecte intermodular 2,836104,0492,es_ES,## DAM 
+1996,SEG9_CEE_46025799_2022_845104_0615,Diseño de Interfaces Web,845104,0615,es_ES,## DAW
