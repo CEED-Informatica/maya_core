@@ -24,6 +24,7 @@ class MayaMoodleUser(MoodleUser):
   lastname = None
   firstname = None
   roles = None
+  lastcourseaccess = None
 
   @classmethod
   def from_userid(cls, conn, user_id):
@@ -40,12 +41,14 @@ class MayaMoodleUser(MoodleUser):
       #obj.username = response[0]['username']
       obj.lastname = response[0]['lastname']
       obj.firstname = response[0]['firstname']
+      obj.lastcourseaccess = response[0]['lastcourseaccess']
     else:
       obj.fullname = "<Unknown>"
       obj.email = "<Unknown>"
       #obj.username = "<Unknown>"
       obj.lastname = "<Unknown>"
       obj.firstname = "<Unknown>"
+      obj.lastcourseaccess = "<Unknown>"
    
     return obj
 
@@ -61,6 +64,7 @@ class MayaMoodleUser(MoodleUser):
     obj.firstname = raw_json['firstname']
     obj.lastname = raw_json['lastname']
     obj.email = raw_json['email']
+    obj.lastcourseaccess = raw_json['lastcourseaccess']
  
     return obj
   
@@ -93,6 +97,7 @@ class MayaMoodleUsers(list):
         'firstname': st['firstname'],
         'lastname': st['lastname'],
         'email': st['email'],
+        'lastcourseaccess': st['lastcourseaccess'],
       }
 
       roles = []
