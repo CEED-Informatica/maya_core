@@ -1101,7 +1101,7 @@ class SchoolYear(models.Model):
           continue
         
         for classroom in classroom_id:
-          check_classrooms_id.append((classroom['moodle_id'], subject['abbr']))
+          check_classrooms_id.append((classroom['moodle_id'], subject['id']))
 
       job_data = { 'check_classrooms_id': check_classrooms_id, 
                      'course_id': course.id }
