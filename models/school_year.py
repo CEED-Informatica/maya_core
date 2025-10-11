@@ -950,12 +950,13 @@ class SchoolYear(models.Model):
       cron_ids.append(task)  
 
     # creación de cron jobs para los ciclos de manera independiente
+    _logger.info('Creando cron por ciclo de manera independiente => aulas de tutoria')
     for course in courses:
       # módulos de tutoria
-      _logger.info(course.subjects_ids)
+      _logger.info(f'Ciclo -> {course.abbr}')
       tut_subjects = [ subject for subject in course.subjects_ids if subject['code'][:3] == 'TUT']
 
-      _logger.info(tut_subjects)
+      _logger.info(f'Tutorias: {tut_subjects}')
       if not tut_subjects:
         _logger.error('No hay módulos de tutoria asignados en {}'.format(course.abbr))
         continue
@@ -977,7 +978,6 @@ class SchoolYear(models.Model):
         cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'MTAL')])
         task_name = 'Matricula alumnos de {} en Maya {}'.format(course.abbr, 
               '/{}'.format(subject.year) if len(list(distinct_subject_tut)) > 1 else '')
-        """ task_data = self.cron_template2task(cron_template, task_name, str(job_data)) """
 
         job_data = { 'classroom_id': classroom_id.moodle_id,
                      'course_id': course.id,
@@ -992,9 +992,7 @@ class SchoolYear(models.Model):
         cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'DVAL')])
         task_name = 'Descarga datos convalidaciones {} desde Aules {}'.format(course.abbr, 
               '/{}'.format(subject.year) if len(list(distinct_subject_tut)) > 1 else '')
-        """ job_data.task_id = classroom_id.get_task_id_by_key('validation')
-        task_data = self.cron_template2task(cron_template, task_name, str(job_data)) """
-
+        
         job_data = { 'validation_classroom_id': classroom_id.moodle_id,
                      'course_id': course.id,
                      'subject_id': subject.id,
@@ -1009,8 +1007,6 @@ class SchoolYear(models.Model):
         cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'DVAC')])
         task_name = 'Descarga datos reclamación convalidaciones {} desde Aules {}'.format(course.abbr, 
               '/{}'.format(subject.year) if len(list(distinct_subject_tut)) > 1 else '')
-        """ job_data.task_id = classroom_id.get_task_id_by_key('validation_claim')
-        task_data = self.cron_template2task(cron_template, task_name, str(job_data)) """
 
         job_data = { 'validation_classroom_id': classroom_id.moodle_id, 
                      'course_id': course.id,
@@ -1026,10 +1022,7 @@ class SchoolYear(models.Model):
         cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'NOTV')])
         task_name = 'Notifica estado convalidaciones {} desde Aules {}'.format(course.abbr, 
               '/{}'.format(subject.year) if len(list(distinct_subject_tut)) > 1 else '')
-        """ job_data.task_id = classroom_id.get_task_id_by_key('validation')
-        job_data.task2_id = classroom_id.get_task_id_by_key('validation_claim')
-        task_data = self.cron_template2task(cron_template, task_name, str(job_data)) """
-
+      
         job_data = { 'validation_classroom_id': classroom_id.moodle_id, 
                      'course_id': course.id,
                      'validation_task_id': classroom_id.get_task_id_by_key('validation'), 
@@ -1045,9 +1038,6 @@ class SchoolYear(models.Model):
         cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'NTCV')])
         task_name = 'Notifica estado reclamación convalidaciones {} desde Aules {}'.format(course.abbr, 
               '/{}'.format(subject.year) if len(list(distinct_subject_tut)) > 1 else '')
-        """ job_data.task_id = classroom_id.get_task_id_by_key('validation_claim')
-        job_data.task2_id = None
-        task_data = self.cron_template2task(cron_template, task_name, str(job_data)) """
 
         job_data = { 'validation_classroom_id': classroom_id.moodle_id, 
                      'course_id': course.id, 
@@ -1058,7 +1048,7 @@ class SchoolYear(models.Model):
 
         cron_ids.append(task)
 
-         ## CONVALIDACIONES COMPETENCIAS
+        ## CONVALIDACIONES COMPETENCIAS
         cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'DVUC')])
         task_name = 'Descarga datos convalidaciones por competencias {} desde Aules {}'.format(course.abbr, 
               '/{}'.format(subject.year) if len(list(distinct_subject_tut)) > 1 else '')
@@ -1090,6 +1080,37 @@ class SchoolYear(models.Model):
 
         cron_ids.append(task)
 
+    _logger.info('Creando cron por ciclo de manera independiente => todos los módulos menos tutoría')
+    for course in courses:
+      # Por cada módulo del ciclo que no sea tutoria
+      _logger.info(f'Ciclo -> {course.abbr}')
+      _logger.info(f'Módulos: {course.subjects_ids}')
+      for subject in course.subjects_ids:
+        if subject['code'][:3] == "TUT": # descarto los módulos de tutoria
+          continue
+
+        classroom_id = subject.get_classroom_by_course_id(course)
+
+        if len(classroom_id) == 0:  # descarto los módulos que no tienen asociada aula virtual
+          _logger.warning(f'El módulo {subject.code} - {subject.abbr} del {course.abbr} no tiene asignada un aula virtual')
+          continue
+        
+        cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'CAAL')])
+        task_name = 'Comprueba la conexión a Aules de los módulos de {}'.format(course.abbr)
+
+        check_classrooms_id = []
+
+        for classroom in classroom_id:
+          check_classrooms_id.append((classroom['moodle_id'], subject['abbr']))
+
+        job_data = { 'check_classrooms_id': check_classrooms_id, 
+                     'course_id': course.id }
+        
+        task_data = self.cron_template2task(cron_template, task_name, **job_data)
+        task = (0, 0, task_data)
+
+        cron_ids.append(task)
+    
 
     # añade nuevos registro, pero los mantiene en "el aire" hasta que se grabe el school_year 
     self.cron_ids = cron_ids
