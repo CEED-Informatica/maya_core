@@ -1085,6 +1085,11 @@ class SchoolYear(models.Model):
       # Por cada módulo del ciclo que no sea tutoria
       _logger.info(f'Ciclo -> {course.abbr}')
       _logger.info(f'Módulos: {course.subjects_ids}')
+
+      check_classrooms_id = []
+      cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'CAAL')])
+      task_name = 'Comprueba la conexión a Aules de los módulos de {}'.format(course.abbr)
+
       for subject in course.subjects_ids:
         if subject['code'][:3] == "TUT": # descarto los módulos de tutoria
           continue
@@ -1095,21 +1100,16 @@ class SchoolYear(models.Model):
           _logger.warning(f'El módulo {subject.code} - {subject.abbr} del {course.abbr} no tiene asignada un aula virtual')
           continue
         
-        cron_template = self.env['maya_core.cron_register'].search([('key', '=', 'CAAL')])
-        task_name = 'Comprueba la conexión a Aules de los módulos de {}'.format(course.abbr)
-
-        check_classrooms_id = []
-
         for classroom in classroom_id:
           check_classrooms_id.append((classroom['moodle_id'], subject['abbr']))
 
-        job_data = { 'check_classrooms_id': check_classrooms_id, 
+      job_data = { 'check_classrooms_id': check_classrooms_id, 
                      'course_id': course.id }
         
-        task_data = self.cron_template2task(cron_template, task_name, **job_data)
-        task = (0, 0, task_data)
+      task_data = self.cron_template2task(cron_template, task_name, **job_data)
+      task = (0, 0, task_data)
 
-        cron_ids.append(task)
+      cron_ids.append(task)
     
 
     # añade nuevos registro, pero los mantiene en "el aire" hasta que se grabe el school_year 
@@ -1515,6 +1515,10 @@ class SchoolYear(models.Model):
 
     #task_data['school_year_id'] = self.ids[0]
     task_data['context'] = cron_template.context
+
+    task_data['key'] = cron_template.key
+    task_data['group_label'] = cron_template.key
+
     task_data['name'] = task_name
     task_data['active'] = True
     task_data['state'] = cron_template.state
