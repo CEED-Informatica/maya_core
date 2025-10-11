@@ -19,7 +19,8 @@ class Employee(models.Model):
   # a partir de user_ids
   user_id = fields.Many2one('res.users', 
                             compute = '_compute_user_id', 
-                            inverse = '_user_inverse')
+                            inverse = '_user_inverse',
+                            store=True)
   
   #dni = fields.Char(string = 'DNI', size = 9, required = True)
   name = fields.Char(string = 'Nombre', required = True)
