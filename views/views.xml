@@ -388,6 +388,19 @@
       </field>
     </record>
 
+    <!-- filtros para las tareas programadas -->
+    <record model="ir.ui.view" id="maya_core.ir_cron_tree_search">
+      <field name="name">Agrupacion para tareas</field>
+      <field name="model">maya_core.ir.cron</field>
+      <field name="arch" type="xml">
+        <search>
+          <group expand='0' string='Agrupar'>
+            <filter name="group_by_group_label" string="Etiqueta de grupo" context="{'group_by': 'group_label'}"/>
+          </group>
+        </search>    
+      </field>
+    </record>
+
     <record model="ir.ui.view" id="maya_core.ir_cron_tree">
       <field name="name">Tareas programadas</field>
       <field name="model">maya_core.ir.cron</field>

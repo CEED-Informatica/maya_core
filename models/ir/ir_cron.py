@@ -33,10 +33,20 @@ class IrCron(models.Model):
   # Objectoid al que va asociado el cron, 
   # no confundir con el modelo que tiene el código a ejecutar.
   school_year_id = fields.Many2one('maya_core.school_year', string = 'Curso escolar', ondelete = 'cascade')
- 
-  """ inactivity_period_ids = fields.One2many('ir.cron.inactivity.period', 
-    string = 'Periodos de inactividad',
-    inverse_name = 'cron_id') """
+
+  key = fields.Char('Key', required=True)
+  
+  group_label = fields.Selection([
+    ('MTAL', 'Matricula alumnos'), 
+    ('CAAL', 'Comprobación de asistencia en Aules'), 
+    ('DVAL', 'Descarga convalidaciones'), 
+    ('DVAC', 'Descarga reclamaciones convalidaciones'),
+    ('DVUC', 'Descarga convalidaciones por competencias'), 
+    ('NOTV', 'Notificación del estado de las convalidaciones'), 
+    ('NVUC', 'Notificación del estado de las convalidaciones por competencias'), 
+    ('NTCV', 'Notificación del estado de reclamaciones sobre convalidaciones'),
+    ('CHDL', 'Comprobación de fechas límites convalidaciones superadas'), 
+    ],string = "Etiqueta de grupo")
      
   def method_direct_trigger(self):
     self.check_access_rights('write')
