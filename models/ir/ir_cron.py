@@ -34,7 +34,7 @@ class IrCron(models.Model):
   # no confundir con el modelo que tiene el código a ejecutar.
   school_year_id = fields.Many2one('maya_core.school_year', string = 'Curso escolar', ondelete = 'cascade')
 
-  key = fields.Char('Key', required=True)
+  key = fields.Char('Key')
   
   group_label = fields.Selection([
     ('MTAL', 'Matricula alumnos'), 
