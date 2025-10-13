@@ -69,6 +69,9 @@
         'reports/paper_format.xml',
         'reports/school_calendar.xml',
     ],
+
+    'post_load': 'create_itaca_data_folder',
+    
     'installable': True,
     'application': True,
 }
