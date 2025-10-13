@@ -4,6 +4,8 @@
 
 import fitz
 from math  import isclose
+import pandas as pd
+from odoo.exceptions import UserError
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -142,4 +144,23 @@ def split_list(a: list, n: int) -> list:
     k, m = divmod(len(a), n)
     return (a[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n))
 
+def read_itaca_csv(filename: str) -> tuple[pd.DataFrame, pd.Series]:
+  """
+  Lee el fichero CSV con los datos de Itaca y devuelve el DataFrame original y su versión aplanada.
 
+  :param filename: Ruta completa al fichero CSV.
+  :return: Una tupla (df, df_aplanado) donde:
+            - df: DataFrame original leído del CSV
+            - df_aplanado: Serie con todos los valores del DataFrame aplanados
+  :raises UserError: Si el fichero no existe o no se puede leer.
+  """
+  try:
+    df = pd.read_csv(filename)
+  except FileNotFoundError:
+    raise UserError(f"¡Operación cancelada!\n\nNo se pudo encontrar el fichero de datos Itaca en {filename}.")
+  except pd.errors.ParserError as e:
+    raise UserError(f"Error al leer el fichero CSV {filename}: {str(e)}")
+
+  df_aplanado = df.stack()
+
+  return df, df_aplanado

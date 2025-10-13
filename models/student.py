@@ -3,7 +3,7 @@ from odoo import models, fields
 from odoo.exceptions import UserError
 from datetime import datetime
 
-import pandas as pd
+from ...maya_core.support.helper import read_itaca_csv
 
 class Student(models.Model):
   """
@@ -87,14 +87,15 @@ class Student(models.Model):
     #TODO parametrizar estos datos en configuraciones
     # TODO mejorar creando un diccionario por mail, pero deberia controlar que pasa con dos claves iguales
     archivo_csv = '/mnt/odoo-repo/itaca/temp.csv'
-  
+    """ 
     try:
       df = pd.read_csv(archivo_csv)
     except FileNotFoundError:
       raise UserError(f"¡Operación cancelada!\n\nNo se pudo encontrar el fichero de datos Itaca en {archivo_csv}.")
     
     # aplano la lista para ver si el valor del mail está o está  repetido
-    data_stack = df.stack()
+    data_stack = df.stack() """
+    df, data_stack= read_itaca_csv(archivo_csv)
     errors = []
     
     for record in self:
