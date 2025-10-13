@@ -39,6 +39,47 @@ class Student(models.Model):
     for record in self:
       record.student_info = record.surname + ', ' + record.name
 
+  @staticmethod
+  def update_student_data_from_itaca(record, df, data_stack):
+    """
+    Procesa un único estudiante buscando sus emails en el DataFrame df.
+    Devuelve una tupla (actualizado: bool, lista_de_errores)
+    """
+    errors = []
+    update = False
+
+    for email in [record.email_coorp, record.email, record.email_support]:
+      if update:  # ya se ha actualizado, no sigo buscando
+        break
+
+      if not email or not email.strip():
+        continue
+
+      email = email.strip()
+      count = (data_stack == email).sum()
+
+      if count == 0:
+        errors.append(f"No se encuentra información en Itaca para el alumno {record.student_info}")
+        continue
+
+      if count > 1:
+        errors.append(f"Dos o más entradas de la base de datos de Itaca contienen el mismo mail {email}")
+        continue
+
+      # buscamos en columnas específicas
+      for column in ['email_corporativo', 'email1', 'email2']:
+        found = df[df[column] == email]
+        if len(found) == 1:
+            data = found.iloc[0].to_dict()
+            record.email_coorp = data['email_corporativo']
+            record.nia = data['NIA']
+            record.email = data['email1']
+            record.email_support = data['email2']
+            update = True
+            break
+
+    return update, errors
+
   def update_itaca_fields(self):
     """
     Actualiza los datos desde Itaca de todos los estudiantes seleccionados
@@ -57,38 +98,8 @@ class Student(models.Model):
     errors = []
     
     for record in self:
-      update = False
-
-      for email in [record.email_coorp,record.email,record.email_support]:
-        if update: # ya se ha actualizado, no sigo buscando
-          break
-
-        if not email or not email.strip():
-          continue
-
-        count = (data_stack == email.strip()).sum()
-
-        if count == 0:
-          errors.append(f"No se encuentra información en Itaca para el alumno {record.student_info}")
-          continue
-
-        if count > 1:
-          errors.append(f"Dos o más entradas de la base de datos de Itaca contienen el mismo mail {email}")
-          continue
-        
-        data = None
-        for column in ['email_corporativo','email1','email2']:
-          found = df[df[column] == email]
-          
-          if len(found) == 1:
-            data = found.iloc[0].to_dict()
- 
-            record.email_coorp = data['email_corporativo']
-            record.nia = data['NIA']
-            record.email = data['email1']
-            record.email_support = data['email2']
-            update = True 
-            break
+      _, record_errors = Student.update_student_data_from_itaca(record, df, data_stack)
+      errors.extend(record_errors)
 
     # creo un fichero de texto con los errores
     errors_filename = ''
@@ -101,13 +112,13 @@ class Student(models.Model):
             for line in errors:
                 f.write(f"{line}\n")
         
-        errors_filename = 'Más información en: ' + errors_filename
+        errors_filename = f'\r{len(errors)} error(es). Más información en: ' + errors_filename
 
       except IOError as e:
         raise UserError(f"Error al escribir en el fichero: {str(e)}")
 
 
-    message = f'{len(self)} contactos procesados.\n{len(errors)} con errores. ' + errors_filename  
+    message = f'{len(self)} contactos procesados. ' + errors_filename  
 
     return {
       'type': 'ir.actions.client',
