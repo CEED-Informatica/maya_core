@@ -453,7 +453,7 @@
       <field name="binding_view_types">list,form</field>
       <field name="state">code</field>
       <field name="code">
-          records.update_itaca_fields()
+          action = records.update_itaca_fields()
       </field>
     </record>
 

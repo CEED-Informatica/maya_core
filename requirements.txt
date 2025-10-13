@@ -6,3 +6,4 @@ pycurl
 moodleteacher
 PyMuPDF
 tabulate
+pandas
