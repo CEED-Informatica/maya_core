@@ -15,7 +15,11 @@ class Student(models.Model):
   nia = fields.Char(string = 'NIA', size = 9)
   name = fields.Char(string = 'Nombre', required = True)
   surname = fields.Char(string = 'Apellidos', required = True)
+
+  # emails
   email = fields.Char(string = 'Email')
+  email_support = fields.Char(string = 'Email de apoyo')
+  email_coorp = fields.Char(string = 'Email coorporativo')
 
   student_info = fields.Char(string = 'Nombre completo', compute = '_compute_full_student_info')
 
@@ -31,3 +35,18 @@ class Student(models.Model):
   def _compute_full_student_info(self):
     for record in self:
       record.student_info = record.surname + ', ' + record.name
+
+
+  def update_student_from_itaca(self):
+    """
+    Actualiza los datos desde Itaca de un estudiante
+    """
+    print("pasooO   1")
+
+  def update_itaca_fields(self):
+    """
+    Actualiza los datos desde Itaca de todos los estudiantes seleccionados
+    """
+
+    for record in self:
+      print(record.name)
