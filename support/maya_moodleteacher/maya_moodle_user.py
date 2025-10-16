@@ -41,14 +41,13 @@ class MayaMoodleUser(MoodleUser):
       #obj.username = response[0]['username']
       obj.lastname = response[0]['lastname']
       obj.firstname = response[0]['firstname']
-      obj.lastcourseaccess = response[0]['lastcourseaccess']
     else:
       obj.fullname = "<Unknown>"
       obj.email = "<Unknown>"
       #obj.username = "<Unknown>"
       obj.lastname = "<Unknown>"
       obj.firstname = "<Unknown>"
-      obj.lastcourseaccess = "<Unknown>"
+
    
     return obj
 
