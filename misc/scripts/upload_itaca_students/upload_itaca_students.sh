@@ -19,12 +19,12 @@ usage() {
     echo "Parámetros opcionales:"
     echo "  -p <password>   Password ssh para el usuario del servidor Maya."
     echo "  -f <valor>      Estudios sobre los que se filtra a los alumnos: 5 (Ciclos), 6 (Bachillerato), 7 (Formación para Adultos), -1 (Todos/sin filtro). Por defecto: 5"
-    echo "  -s              Si se incluye, sSi se indica, únicamente se hace la conversión a csv y se copia el fichero en la ruta indicada del ordenador local."
+    echo "  -s              Si se indica, únicamente se hace la conversión a csv y se copia el fichero en la ruta indicada del ordenador local."
     echo "  -h              Muestra esta ayuda."
     exit 1
 }
 
-echo "\033[1mMaya | upload-itaca-students. v0.1\033[0m"
+echo "\033[1mMaya | upload-itaca-students. v0.2\033[0m"
 
 # Las opciones tienen:
 #   x:, m:, p:, f: (con argumentos obligatorios)

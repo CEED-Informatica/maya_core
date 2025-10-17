@@ -167,7 +167,7 @@ def read_table_from_pdf(pdf_filename: str) -> pd.DataFrame:
 
 ## Cuerpo del script ##
 
-print('\033[1mMaya | [container] upload-itaca-students. v0.1\033[0m')
+print('\033[1mMaya | [container] upload-itaca-students. v0.2\033[0m')
 
 parser = argparse.ArgumentParser(
   description = 'Incluye en Maya un fichero XML de estudiantes obtenido de Itaca')
@@ -195,11 +195,19 @@ load_dotenv('/app/.env')
 server_ip = os.getenv("SERVER_IP")
 server_user = os.getenv("SERVER_USER")
 remote_folder = os.getenv("REMOTE_FOLDER")
+container_name = os.getenv("CONTAINER_NAME")
 
+# creación del nombre del fichero
+suffix_map = { '5': "CF", '6': "BCH", '7': "FPA" }
+output_filename = f"itaca_students_{suffix_map.get(filter_studies, 'ALL')}.csv"
 
 # comprobación de que los parámetros estén ok
 if not remote_folder:
   print("\033[0;31m[ERROR]\033[0m La variable REMOTE_FOLDER no está definida en el fichero .env o está vacía.")
+  exit(1)
+
+if not container_name and not no_ssh:
+  print("\033[0;31m[ERROR]\033[0m La variable CONTAINER_NAME no está definida en el fichero .env o está vacía.")
   exit(1)
 
 if not server_ip and not no_ssh:
@@ -258,7 +266,7 @@ print(f'\n     (1) Casos de éxito.\n     (2) Posiblemente dados de baja.')
 
 # Paso 4 -> creación del CSV
 print(f'\n============== Creación CSV =============\n')
-local_file_path = './data/temp.csv'
+local_file_path = './data/' + output_filename
 try:
     df_merged.to_csv(local_file_path, index=False, encoding='utf-8')
     print(f"\033[0;32m[OK]\033[0m CSV generado correctamente: {local_file_path}")
@@ -269,34 +277,54 @@ except Exception as e:
 print(f'\n================= Copia =================\n')
 try:
   if args.no_ssh:
-    """ Copia el archivo localmente en la carpeta indicada por remote_folder
-      os.makedirs(remote_folder, exist_ok=True)
+    # Copia el archivo localmente en la carpeta indicada por remote_folder
+    # hay que hacer un docker cop ya que este fichero se ejecuta desde dentro de un contenedor
+    """ os.makedirs(remote_folder, exist_ok=True)
     dest_path = os.path.join(remote_folder, os.path.basename(local_file_path))
+    shutil.copy(local_file_path, dest_path)
 
-    shutil.copy(local_file_path, dest_path) """
-    print(f"\033[0;32m[OK]\033[0m Archivo copiado en: {local_file_path}")
-  else:
+    print(f"\033[0;32m[OK]\033[0m Archivo copiado en: {dest_path}") """
+    print('\033[0;34m[INFO]\033[0m Opción de copia (-nssh) no soportada')
+  else: # copia en el servidor
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(server_ip, username=server_user, password=server_password)
+
+    # Copio al home del usuario
     sftp = ssh.open_sftp()
-    remote_path = os.path.join(remote_folder, os.path.basename(local_file_path))
-    sftp.put(local_file_path, remote_path)
+    temp_path = os.path.join('/home',server_user, os.path.basename(local_file_path))
+    sftp.put(local_file_path, temp_path)
     sftp.close()
+
+    print(f'\033[0;34m[OK]\033[0m Archivo copiado vía SSH a: {server_ip} {remote_folder}')
+
+    # Copia dentro del contenedor
+    cmd = f"docker cp {temp_path} {container_name}:{remote_folder}"
+    stdin, stdout, stderr = ssh.exec_command(cmd)
+    exit_code = stdout.channel.recv_exit_status()
+    if exit_code == 0:
+      print(f'\033[0;34m[OK]\033[0m Archivo copiado dentro del contenedor: {container_name}')
+    else:
+      print("\033[0;31m[ERROR]\033[0m ", stderr.read().decode())
+
+    # Borra el fichero temporal
+    cmd = f"rm {temp_path}"
+    stdin, stdout, stderr = ssh.exec_command(cmd)
+    exit_code = stdout.channel.recv_exit_status()
+    if exit_code == 0:
+      print(f'\033[0;34m[OK]\033[0m Archivo temporal {temp_path} eliminado')
+    else:
+      print("\033[0;31m[ERROR]\033[0m ", stderr.read().decode())
+
     ssh.close()
-    print(f'\033[0;34m[OK]\033[0m Archivo copiado vía SSH a: {remote_path}')
+
 except Exception as e:
     print(f"\033[0;31m[ERROR]\033[0m {e}")
-    if "[Errno 13]" in str(e):
-      print('\033[0;34m[INFO]\033[0m Comprueba los permisos de REMOTE_FOLDER. Desde el servidor de Maya')
-      print('\033[0;34m[INFO]\033[0m >   docker exec -it <nombre_contenedor_odoo> id odoo')
-      print('\033[0;34m[INFO]\033[0m >   sudo chown -R <uid>:<gid> /home/administrador/maya/.server-info/odoo/repo')
 
-"""
-if os.path.exists('temp.csv'):
+
+if os.path.exists(local_file_path):
   try:
-    os.remove('temp.csv')
-    print('\033[0;34m[INFO]\033[0m temp.csv eliminado.')
+    os.remove(local_file_path)
+    print(f'\033[0;34m[INFO]\033[0m Fichero {local_file_path} eliminado.')
   except Exception as e:
-    print(f"\033[0;31m[ERROR]\033[0m No se pudo eliminar temp.csv: {e}")
-"""
+    print(f"\033[0;31m[ERROR]\033[0m No se pudo eliminar {local_file_path}: {e}")
