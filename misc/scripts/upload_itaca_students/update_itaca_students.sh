@@ -84,7 +84,7 @@ PYTHON_ARGS="/app/data/input.xml /app/data/input.pdf"
 # Argumentos Opcionales
 # Contraseña
 if [ -n "$PASSWORD" ]; then
-    PYTHON_ARGS="$PYTHON_ARGS -p \"$PASSWORD\""
+    PYTHON_ARGS="$PYTHON_ARGS -p $PASSWORD"
 fi
 
 # filtro
