@@ -25,6 +25,7 @@
            <app data-string="Maya | Core" string="Maya | Core" name="maya_core">
             <h2>Moodle</h2>
             <div class="row mt16 o_settings_container" name="maya_core_moodle_setting_container">
+
               <!-- contenedor URL Moodle -->
               <div class="col-12 col-lg-6 o_setting_box" title="URL Moodle">
                 <div class="o_setting_right_pane">
@@ -35,17 +36,35 @@
                   </div>
                 </div>
               </div>
-              <!-- contenedor nombre de usuario -->
+
+              <div class="col-12 col-lg-6 o_setting_box" title="">
+                <div class="o_setting_left_pane"/>                
+              </div>
+
+              <!-- Nombre de usuario Moodle -->
               <div class="col-12 col-lg-6 o_setting_box" title="Usuario">
                 <div class="o_setting_left_pane"/>
                 <div class="o_setting_right_pane">
-                 <span class="o_form_label">Usuario</span>
-                 <div class="text-muted">Usuario (clave) definido en .maya_moodleteacher</div>
-                 <div class="text-muted content-group mt8">
-                   <field name="moodle_user" class="text-center oe_inline" />
-                 </div>
+                  <span class="o_form_label">Usuario</span>
+                  <div class="text-muted">Usuario (clave) definido en .maya_moodleteacher</div>
+                  <div class="text-muted content-group mt8">
+                    <field name="moodle_user" class="text-center oe_inline" />
+                  </div>
                 </div>
               </div>
+
+              <!-- nombre Administrador Aules  -->
+              <div class="col-12 col-lg-6 o_setting_box" title="Usuario Administrador">
+                <div class="o_setting_left_pane"/>
+                <div class="o_setting_right_pane">
+                  <span class="o_form_label">Usuario Administrador</span>
+                  <div class="text-muted">Usuario administrador (clave) definido en .maya_moodleteacher</div>
+                  <div class="text-muted content-group mt8">
+                    <field name="moodle_user_admin" class="text-center oe_inline" />
+                  </div>
+                  </div>
+              </div>
+
             </div>
           </app>
         </xpath>
