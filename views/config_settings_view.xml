@@ -22,7 +22,7 @@
             replace: replace the content of the tag. -->
         <xpath expr="//app[@name='general_settings']" position="after">
           <!-- string, el texto que aparecerá en el menu lateral-->
-           <app data-string="Maya | Core" string="Maya | Core" name="maya_core">
+          <app data-string="Maya | Core" string="Maya | Core" name="maya_core">
             <h2>Moodle</h2>
             <div class="row mt16 o_settings_container" name="maya_core_moodle_setting_container">
 
@@ -65,6 +65,46 @@
                   </div>
               </div>
 
+            </div>
+
+            <h2>Itaca</h2>
+            <div class="row mt16 o_settings_container" name="maya_core_itaca_setting_container">
+
+              <!-- Fichero datos -->
+              <div class="col-12 col-lg-6 o_setting_box" title="Nombre del fichero de datos">
+                <div class="o_setting_right_pane">
+                 <span class="o_form_label">Nombre del fichero de datos</span>
+                 <div class="text-muted">Nombre del fichero .csv (debe incluir la extensión) que contiene los datos de los alumnos de Itaca</div>
+                 <div class="text-muted content-group mt8">
+                    <field name="itaca_users_data" class="text-center oe_inline" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h2>Correo</h2>
+            <div class="row mt16 o_settings_container" name="maya_core_itaca_setting_container">
+              <!-- Alias maya -->
+              <div class="col-12 col-lg-6 o_setting_box" title="URL Moodle">
+                <div class="o_setting_right_pane">
+                 <span class="o_form_label">Alias correo Maya</span>
+                 <div class="text-muted">Alias en la configuración de Odoo del servidor de correo que envia correo con el nombre de Maya</div>
+                 <div class="text-muted content-group mt8">
+                    <field name="alias_mail_maya" class="text-center oe_inline" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Alias centro  -->
+              <div class="col-12 col-lg-6 o_setting_box" title="URL Moodle">
+                <div class="o_setting_right_pane">
+                 <span class="o_form_label">Alias correo Centro</span>
+                 <div class="text-muted">Alias en la configuración de Odoo del servidor de correo que envia correo con el nombre del Centro</div>
+                 <div class="text-muted content-group mt8">
+                    <field name="alias_mail_center" class="text-center oe_inline" />
+                  </div>
+                </div>
+              </div>
             </div>
           </app>
         </xpath>
