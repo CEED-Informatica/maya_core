@@ -117,7 +117,7 @@ for teacher in teachers:
     raise Exception(f'No existe el usuario {teacher} en Odoo.')
   
   if id[0]['maya_employee_id'] == False:
-    raise Exception(f'No existe un empleado asociado al usuario {tsr["teacher"]}.')
+    raise Exception(f'No existe un empleado asociado al usuario {teacher}.')
   
   # se eliminan, si las hay, las relaciones previas con otros módulos
   # es decir, cada vez que ejecuto el script se actualizan todas las relaciones
