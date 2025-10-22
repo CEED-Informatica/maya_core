@@ -25,6 +25,18 @@ def link_subject_course_classroom(course, subject, classroom) -> int:
   Enlaza el módulo con el aula virtual para cada ciclo 
   Devuelve el id de Odoo de la tupla creada
   """
+  link = models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'search_read', [[['course_id','=', course],['subject_id','=', subject],['classroom_id','=', classroom]]], { 'fields': ['id']})
+
+  if len(link):
+    print(f'       \033[0;34m[WARN]\033[0m Aula ya relacionada con ciclo y módulo. Actualizando')
+    #models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'unlink', [[link[0]['id']]])
+    return models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel',
+                                           'write', 
+                                           [[link[0]['id']],
+                                           {'course_id': course, 
+                                            'subject_id': subject,
+                                            'classroom_id': classroom}])
+      
   return models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'create', [{
         'course_id': course,
         'subject_id': subject,
@@ -69,7 +81,7 @@ except Exception as e:
   exit()
 
 with open(args.csv_filename) as csv_file:
-  csv_reader = csv.reader(csv_file, delimiter = ',')
+  csv_reader = csv.reader(csv_file, delimiter = ';')
   line_count = 0
   for row in csv_reader:
     if line_count > 0:
@@ -133,7 +145,7 @@ line_count_OK = 0
 line_count_ERROR = 0
 
 for classroom in classrooms:
-  print("\033[0;32m[INFO]\033[0m Procesando ", classroom['code'])
+  print("\033[0;32m[INFO]\033[0m *************************************\n       Procesando ", classroom['code'])
   try:
     # si el idioma del aula no está configurado asigno uno por defecto
     if classroom['lang_id'] not in languages:
@@ -155,7 +167,7 @@ for classroom in classrooms:
                       'description': classroom['description'], 'lang_id': classroom['lang_id']}
       classroom_id = models.execute_kw(db, uid, password, 'maya_core.classroom', 'create', [input_data])
     else: # ya está en Maya
-      print(f'   \033[0;32m[INFO]\033[0m {classroom["code"]} ya existe en Maya. Actualizándolo')
+      print(f'       \033[0;34m[WARN]\033[0m {classroom["code"]} ya existe en Maya. Actualizándolo')
 
       models.execute_kw(db, uid, password, 'maya_core.classroom',
                                            'write', 
@@ -169,24 +181,24 @@ for classroom in classrooms:
     if code_blocks[-1] == 'TU02CF' or code_blocks[-1] == 'TU01CF':  # en versiones anteriores de aules se nombraban así
     # if code_blocks[-1] == 'TUT0':  # aula de tutoria común para primero y segundo 
       link_subject_course_classroom(courses[code_blocks[-2]]['id'], subjects['TUT1']['id'], classroom_id)
-      print(f'   \033[0;32m[INFO]\033[0m Asociado {classroom["code"]} con el módulo {subjects["TUT1"]["abbr"]} en {courses[code_blocks[-2]]["abbr"]}')
+      print(f'       \033[0;34m[WARN]\033[0m Asociado {classroom["code"]} con el módulo {subjects["TUT1"]["abbr"]} en {courses[code_blocks[-2]]["abbr"]}')
       link_subject_course_classroom(courses[code_blocks[-2]]['id'], subjects['TUT2']['id'], classroom_id)
-      print(f'   \033[0;32m[INFO]\033[0m Asociado {classroom["code"]} con el módulo {subjects["TUT2"]["abbr"]} en {courses[code_blocks[-2]]["abbr"]}')
+      print(f'       \033[0;34m[WARN]\033[0m Asociado {classroom["code"]} con el módulo {subjects["TUT2"]["abbr"]} en {courses[code_blocks[-2]]["abbr"]}')
     else:
       # link_subject_course_classroom(courses[code_blocks[-2]]['id'], subjects[code_blocks[-1]]['id'], classroom_id)
       link_subject_course_classroom(courses[classroom['course']]['id'], subjects[classroom['subject']]['id'], classroom_id)
-      print(f'   \033[0;32m[INFO]\033[0m Asociado {classroom["code"]} con el módulo {subjects[classroom["subject"]]["abbr"]} en {courses[classroom["course"]]["abbr"]}')
+      print(f'       \033[0;34m[WARN]\033[0m Asociado {classroom["code"]} con el módulo {subjects[classroom["subject"]]["abbr"]} en {courses[classroom["course"]]["abbr"]}')
 
     line_count_OK += 1
 
   except (xmlrpc.client.Fault) as e:
-    print('   \033[0;31m[ERROR]\033[0m ' + e.faultString)
+    print('       \033[0;31m[ERROR]\033[0m ' + e.faultString)
     line_count_ERROR += 1
   except KeyError:
-    print('   \033[0;31m[ERROR]\033[0m Clave no encontrada.')
+    print('       \033[0;31m[ERROR]\033[0m Clave no encontrada.')
     line_count_ERROR += 1
 
-print(f'\033[0;32m[INFO]\033[0m Procesados {line_count_OK} aulas virtuales / Errores: {line_count_ERROR}.')
+print(f'\n\033[0;32m[INFO]\033[0m Procesados {line_count_OK} aulas virtuales / Errores: {line_count_ERROR}.')
 
 ## Impresión de las tablas de estado de las ulas en Maya
 print(f'\033[0;32m[INFO]\033[0m Estado aulas introducidas en Maya')
