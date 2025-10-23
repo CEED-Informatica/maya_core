@@ -25,25 +25,42 @@ def link_subject_course_classroom(course, subject, classroom) -> int:
   Enlaza el módulo con el aula virtual para cada ciclo 
   Devuelve el id de Odoo de la tupla creada
   """
-  link = models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'search_read', [[['course_id','=', course],['subject_id','=', subject],['classroom_id','=', classroom]]], { 'fields': ['id']})
-
-  if len(link):
-    print(f'       \033[0;34m[WARN]\033[0m Aula ya relacionada con ciclo y módulo. Actualizando')
-    #models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'unlink', [[link[0]['id']]])
-    return models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel',
-                                           'write', 
-                                           [[link[0]['id']],
-                                           {'course_id': course, 
-                                            'subject_id': subject,
-                                            'classroom_id': classroom}])
-      
-  return models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'create', [{
+  # compruebo si ya existe una relación para ese módulo en ese ciclo
+  old_rel = models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 
+                    'search_read', 
+                    [[['course_id','=', course],['subject_id','=', subject]]], { 'fields': ['id', 'classroom_id']})
+  
+  if not old_rel:
+    # Creo la nueva relación
+    return models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'create', [{
         'course_id': course,
         'subject_id': subject,
         'classroom_id': classroom
         }])
+  elif len(old_rel) and old_rel[0]['classroom_id'][0] != classroom:
+    print(f'       \033[0;36m[ATENCIÓN]\033[0m Ya existe una vinculación previa entre de ese ciclo y módulo con otra aula. Eliminandola...')
+    models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'unlink', [[old_rel[0]['id']]])   
+  else:
+    print(f'       \033[0;34m[WARN]\033[0m Aula ya relacionada con ciclo y módulo.')
+    return -1
+  
+ 
+  #link = models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 
+  #                         'search_read', 
+  #                         [[['course_id','=', course],['subject_id','=', subject],['classroom_id','=', classroom]]], { 'fields': ['id']})
 
-print('\033[1mMaya | create-classrooms. v1.1\033[0m')
+  # if len(link):
+    #print(f'       \033[0;34m[WARN]\033[0m Aula ya relacionada con ciclo y módulo. Actualizando')
+    #models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'unlink', [[link[0]['id']]])
+    #return models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel',
+    #                                       'write', 
+    #                                       [[link[0]['id']],
+    #                                       {'course_id': course, 
+    #                                        'subject_id': subject,
+    #                                        'classroom_id': classroom}])
+      
+
+print('\033[1mMaya | create-classrooms. v1.2\033[0m')
 
 parser = argparse.ArgumentParser(
   description = 'Crea aulas virtuales (Maya) desde un csv')
@@ -186,8 +203,9 @@ for classroom in classrooms:
       print(f'       \033[0;34m[WARN]\033[0m Asociado {classroom["code"]} con el módulo {subjects["TUT2"]["abbr"]} en {courses[code_blocks[-2]]["abbr"]}')
     else:
       # link_subject_course_classroom(courses[code_blocks[-2]]['id'], subjects[code_blocks[-1]]['id'], classroom_id)
-      link_subject_course_classroom(courses[classroom['course']]['id'], subjects[classroom['subject']]['id'], classroom_id)
-      print(f'       \033[0;34m[WARN]\033[0m Asociado {classroom["code"]} con el módulo {subjects[classroom["subject"]]["abbr"]} en {courses[classroom["course"]]["abbr"]}')
+      result = link_subject_course_classroom(courses[classroom['course']]['id'], subjects[classroom['subject']]['id'], classroom_id)
+      if result != -1:
+        print(f'       \033[0;34m[WARN]\033[0m Asociado {classroom["code"]} con el módulo {subjects[classroom["subject"]]["abbr"]} en {courses[classroom["course"]]["abbr"]}')
 
     line_count_OK += 1
 
@@ -205,7 +223,6 @@ print(f'\033[0;32m[INFO]\033[0m Estado aulas introducidas en Maya')
 current_classrooms_rel = models.execute_kw(db, uid, password, 'maya_core.subject_classroom_rel', 'search_read', 
                                            [[]], { 'fields': ['course_id', 'subject_id', 'classroom_id']})
 
-""" print(current_classrooms_rel) """
 for cur in courses_output:
   header_course = "="*45 + f" {cur['abbr']} " + "="*45
   print("\n" + header_course.center(180))
@@ -226,3 +243,9 @@ for cur in courses_output:
   classroom_table = tabulate([data], headers=headers, tablefmt="simple", stralign="center")
 
   print(classroom_table)
+
+print(f'==========================================================')
+print(f'\033[0;32m[IMPORTANTE]\033[0m Es posible que aparezcan errores de enlace aula <-> módulo.')
+print(f'             Volver a lanzar el script soluciona la mayoria.')
+print(f'\033[0;32m[IMPORTANTE]\033[0m Es posible que aparezcan aulas huérfanas (sin ciclo asociado) en Maya')
+print(f'             Para dejar el sistema límpio hay borrarlas desde la vista de las classroom.')
