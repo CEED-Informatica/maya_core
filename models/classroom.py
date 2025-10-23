@@ -29,6 +29,24 @@ class Classroom(models.Model):
 
   lang_id = fields.Many2one('res.lang', domain = [('active','=', True)], string = 'Idioma')
 
+  # Obtiene los ciclos relacionados
+  related_course_ids = fields.Many2many(
+      'maya_core.course',
+      compute='_compute_related_course_ids',
+      string='Ciclos relacionados',
+      store=True  #
+
+  @api.depends('subjects_ids', 'subjects_ids.course_id')
+  def _compute_related_course_ids(self):
+      """
+      Calcula todos los ciclos (courses) asociados a esta aula.
+      """
+      for classroom in self:
+          # .mapped() recolecta todos los course_id de las relaciones
+          # y elimina los duplicados automáticamente.
+          courses = classroom.subjects_ids.mapped('course_id')
+          classroom.related_course_ids = courses
+
   _sql_constraints = [ 
     ('unique_moodle_id', 'unique(moodle_id)', 'El identificador de moodle tiene que ser único.'),
   ]

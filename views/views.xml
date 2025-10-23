@@ -172,6 +172,19 @@
       </field>
     </record>
 
+    <!-- agrupaciones para las aulas  -->
+    <record model="ir.ui.view" id="maya_core.classroom_tree_search">
+      <field name="name">Agrupaciones para aulas</field>
+      <field name="model">maya_core.classroom</field>
+      <field name="arch" type="xml">
+        <search>
+          <group expand='0' string='Agrupar'>
+            <filter name="group_by_course" string="Por ciclo" context="{'group_by': 'related_course_ids'}"/>
+          </group>
+        </search>    
+      </field>
+    </record>
+
     <record model="ir.ui.view" id="maya_core.classroom_tree">
       <field name="name">Lista de Aulas virtuales</field>
       <field name="model">maya_core.classroom</field>
@@ -504,6 +517,10 @@
       <field name="name">Aulas virtuales</field>
       <field name="res_model">maya_core.classroom</field>
       <field name="view_mode">tree,form</field>
+      <field name="context">{
+        'search_default_group_by_course': 1
+      }
+      </field>
     </record>
 
     <record model="ir.actions.act_window" id="maya_core.action_task">
