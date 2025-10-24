@@ -17,6 +17,6 @@ class ResConfigSettings(models.TransientModel):
     alias_mail_center = fields.Char(string = 'Alias servidor de correo Centro', config_parameter='maya_core.alias_center_mail',
                               help = 'Alias en la configuración de Odoo del servidor de correo que envia correo con el nombre del centro')
 
-    itaca_users_data = fields.Char(string = 'Fichero de datos de alumnado de Itaca', config_parameter='maya_core.itaca_students_data',
+    itaca_students_data = fields.Char(string = 'Fichero de datos de alumnado de Itaca', config_parameter='maya_core.itaca_students_data',
                               help = 'Nombre del fichero .csv (debe incluir la extensión) que contiene los datos de los alumnos de Itaca. El fichero se almacena en /mnt/odoo-repo/itaca. Se genera con el script upload_itaca_students')
 

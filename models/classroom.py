@@ -34,7 +34,7 @@ class Classroom(models.Model):
       'maya_core.course',
       compute='_compute_related_course_ids',
       string='Ciclos relacionados',
-      store=True  #
+      store=True)
 
   @api.depends('subjects_ids', 'subjects_ids.course_id')
   def _compute_related_course_ids(self):

@@ -76,7 +76,7 @@
                  <span class="o_form_label">Nombre del fichero de datos</span>
                  <div class="text-muted">Nombre del fichero .csv (debe incluir la extensión) que contiene los datos de los alumnos de Itaca</div>
                  <div class="text-muted content-group mt8">
-                    <field name="itaca_users_data" class="text-center oe_inline" />
+                    <field name="itaca_students_data" class="text-center oe_inline" />
                   </div>
                 </div>
               </div>

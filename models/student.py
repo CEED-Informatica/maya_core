@@ -86,7 +86,11 @@ class Student(models.Model):
     """
     #TODO parametrizar estos datos en configuraciones
     # TODO mejorar creando un diccionario por mail, pero deberia controlar que pasa con dos claves iguales
-    itaca_filename = self.env['ir.config_parameter'].get_param('maya_core.itaca_users_data'),
+    itaca_filename = self.env['ir.config_parameter'].get_param('maya_core.itaca_students_data')
+    if not itaca_filename:
+      print(f'\033[0;31m[ERROR]\033[0m No se ha definido el nombre del fichero de datos de itaca')
+      return
+
     csv_file = '/mnt/odoo-repo/itaca/' + itaca_filename
     """ 
     try:
@@ -96,7 +100,13 @@ class Student(models.Model):
     
     # aplano la lista para ver si el valor del mail está o está  repetido
     data_stack = df.stack() """
-    df, data_stack= read_itaca_csv(csv_file)
+    try:
+      df, data_stack = read_itaca_csv(csv_file)
+    except Exception as e:
+      print(f"\033[0;31m[ERROR]\033[0m Error procesando el fichero csv: {str(e)}")
+      return
+    
+    df, data_stack = read_itaca_csv(csv_file)
     errors = []
     
     for record in self:

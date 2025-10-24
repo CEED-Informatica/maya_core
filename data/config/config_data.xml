@@ -5,12 +5,12 @@
     <!-- Moodle-->
     <field name="moodle_user">maya</field>
     <field name="moodle_url">http://moodle:8080</field>
-    <field name="moodle_user_admin">maya</field>
+    <field name="moodle_user_admin">centro</field>
     <!-- mail-->
     <field name="alias_mail_maya">maya</field>
     <field name="alias_mail_center">centro</field>
     <!-- itaca-->
-    <field name="itaca_users_data">itaca_students_CF</field>
+    <field name="itaca_students_data">itaca_students_CF.csv</field>
   </record>
   <function model="res.config.settings" name="execute">
     <value model="res.config.settings"
