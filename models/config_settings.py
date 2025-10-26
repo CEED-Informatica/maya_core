@@ -14,7 +14,7 @@ class ResConfigSettings(models.TransientModel):
     alias_mail_maya = fields.Char(string = 'Alias servidor de correo Maya', config_parameter='maya_core.alias_maya_mail',
                               help = 'Alias en la configuración de Odoo del servidor de correo que envia correo con el nombre de Maya')
     
-    alias_mail_center = fields.Char(string = 'Alias servidor de correo Centro', config_parameter='maya_core.alias_center_mail',
+    alias_mail_center = fields.Char(string = 'Alias servidor de correo Centro', config_parameter='maya_core.alias_mail_center',
                               help = 'Alias en la configuración de Odoo del servidor de correo que envia correo con el nombre del centro')
 
     itaca_students_data = fields.Char(string = 'Fichero de datos de alumnado de Itaca', config_parameter='maya_core.itaca_students_data',
