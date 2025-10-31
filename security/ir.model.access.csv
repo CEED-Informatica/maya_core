@@ -1,6 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_maya_core_employee,access_maya_core_employee,maya_core.model_maya_core_employee,base.group_user,1,1,1,1
-access_maya_core_subject_employee_rel,access_maya_core_subject_employee_rel,maya_core.model_maya_core_subject_employee_rel,base.group_user,1,1,1,1
 access_maya_core_subject_student_rel,access_maya_core_subject_student_rel,maya_core.model_maya_core_subject_student_rel,base.group_user,1,1,1,1
 access_maya_core_subject_classroom_rel,access_maya_core_subject_classroom_rel,maya_core.model_maya_core_subject_classroom_rel,base.group_user,1,1,1,1
 access_maya_core_holiday,access_maya_core_holiday,maya_core.model_maya_core_holiday,base.group_user,1,1,1,1
