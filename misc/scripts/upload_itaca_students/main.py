@@ -178,7 +178,7 @@ parser.add_argument('pdf_filename', help = 'Fichero pdf con los datos de los cor
 
 parser.add_argument(
   '-fst', '--filter-studies', default='5', type=validate_filter_studies,
-  help='Estudios sobre los que se filtra a los alumnos: 5 (Ciclos), 6 (Bachillerato), 7 (Formación para Adultos), -1 (Todos/sin filtro). Por defecto: 5'
+  help='Estudios sobre los que se filtra a los alumnos: 4 (Bachillerato), 5 (Ciclos), 7 (Formación para Adultos), -1 (Todos/sin filtro). Por defecto: 5'
 )
 parser.add_argument('-p', '--password', help='Password ssh para el usuario del servidor Maya.')
 parser.add_argument('-nssh', '--no-ssh', action='store_true', help='Si se indica, únicamente se hace la conversión a csv y se copia el fichero en la ruta indicada del ordenador local.')
@@ -198,7 +198,7 @@ remote_folder = os.getenv("REMOTE_FOLDER")
 container_name = os.getenv("CONTAINER_NAME")
 
 # creación del nombre del fichero
-suffix_map = { '5': "CF", '6': "BCH", '7': "FPA" }
+suffix_map = { '5': "CF", '4': "BCH", '7': "FPA" }
 output_filename = f"itaca_students_{suffix_map.get(filter_studies, 'ALL')}.csv"
 
 # comprobación de que los parámetros estén ok
@@ -224,7 +224,8 @@ if not server_password and not no_ssh:
 
 # Cabeceras del fichero xml que vamos a incluir
 HEADERS_TO_INCLUDE = ['NIA','nombre','apellido1','apellido2','email1','email2',
-                       'telefono1','ensenanza']
+                       'telefono1','telefono2','telefono3','ensenanza',
+                       'curso', 'grupo']
 
 # Paso 1 -> Obtenemos los datos del xml
 students_data, base_headers = students_xml2csv(xml_filename, filter_studies, 

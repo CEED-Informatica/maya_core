@@ -18,7 +18,7 @@ usage() {
     echo ""
     echo "Parámetros opcionales:"
     echo "  -p <password>   Password ssh para el usuario del servidor Maya."
-    echo "  -f <valor>      Estudios sobre los que se filtra a los alumnos: 5 (Ciclos), 6 (Bachillerato), 7 (Formación para Adultos), -1 (Todos/sin filtro). Por defecto: 5"
+    echo "  -f <valor>      Estudios sobre los que se filtra a los alumnos: 4 (Bachillerato), 5 (Ciclos), 7 (Formación para Adultos), -1 (Todos/sin filtro). Por defecto: 5"
     echo "  -s              Si se indica, únicamente se hace la conversión a csv y se copia el fichero en la ruta indicada del ordenador local."
     echo "  -h              Muestra esta ayuda."
     exit 1
