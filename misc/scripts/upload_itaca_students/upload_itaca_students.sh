@@ -24,7 +24,7 @@ usage() {
     exit 1
 }
 
-echo "\033[1mMaya | upload-itaca-students. v0.2\033[0m"
+echo "\033[1mMaya | upload-itaca-students. v0.3\033[0m"
 
 # Las opciones tienen:
 #   x:, m:, p:, f: (con argumentos obligatorios)

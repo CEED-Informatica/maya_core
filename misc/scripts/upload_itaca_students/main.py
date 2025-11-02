@@ -142,13 +142,15 @@ def read_table_from_pdf(pdf_filename: str) -> pd.DataFrame:
           valid_tables.append(df_emails)
           # print(f"\033[0;32m[OK]\033[0m Tabla {idx+1} añadida ({len(df_emails)} registros).")
 
-
       except Exception as e:
         print(f"\033[0;31m[ERROR]\033[0m Procesando tabla {idx+1}: {e}")
 
     # Combina todas las tablas válidas
     if valid_tables:
       df_combined = pd.concat(valid_tables, ignore_index=True)
+
+      # elimino duplicados NIA/mail (aparece una vez por cada estudio matriculado)
+      df_combined = df_combined.drop_duplicates(subset=['NIA_pdf', 'email_corporativo'])
 
       print(f"\033[0;32m[OK]\033[0m Extracción PDF completada. Datos:")
       print(f"\n   - Tablas válidas: {len(valid_tables)}\n   - Registros: {len(df_combined)}")
@@ -167,7 +169,7 @@ def read_table_from_pdf(pdf_filename: str) -> pd.DataFrame:
 
 ## Cuerpo del script ##
 
-print('\033[1mMaya | [container] upload-itaca-students. v0.2\033[0m')
+print('\033[1mMaya | [container] upload-itaca-students. v0.3\033[0m')
 
 parser = argparse.ArgumentParser(
   description = 'Incluye en Maya un fichero XML de estudiantes obtenido de Itaca')
