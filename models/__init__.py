@@ -19,3 +19,4 @@ from . import config_settings
 from . import subject_student_rel
 from . import subject_classroom_rel
 from . import subject_employee_rel
+from . import student_course_rel

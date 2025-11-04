@@ -164,3 +164,53 @@ def read_itaca_csv(filename: str) -> tuple[pd.DataFrame, pd.Series]:
   df_aplanado = df.stack()
 
   return df, df_aplanado
+
+def adjust_course_code(in_code: str) -> str:
+  """
+  Toma un codigo de ciclo de la nueva ley lfp y lo pasa al loe
+  Esta funcion deberia ser obsoleta en al curso 2627, cuando actualicemos
+  los códigos de los ciclos en maya
+  """
+  dict_lfp = {
+              '3306174046': '441104',   # AFI
+              '3306174048': '441104',   # AFI
+              '3306174062': '906104',   # ADI 
+              '3306174064': '906104',   # ADI
+              '3306169651': '845104',   # DAW
+              '3306169658': '845104',   # DAW
+              '3306169635': '836104',   # DAM
+              '3306169637': '836104',   # DAM
+              '3306169744': '829104',   # ASIR
+              '3306169751': '829104',   # ASIR
+              '3306172482': '714104',   # GAT
+              '3306172484': '714104',   # GAT
+              '3306172403': '828104',   # GIAT
+              '3306172410': '828104',   # GIAT
+              '3306172330': '827104',   # AVGE
+              '3306172332': '827104',   # AVGE
+              '3306172133': '449104',   # CI
+              '3306172135': '449104',   # CI
+              '3306172181': '898104',   # TIL
+              '3306172183': '898104',   # TIL
+              '3306172149': '899104',   # GVEC
+              '3306172151': '899104',   # GVEC
+              '3306172167': '222104',   # MIP
+              }
+  
+  if in_code not in dict_lfp:
+    return None
+
+  return dict_lfp[in_code]
+
+def add_error_code(code: str, error_codes: str) -> str:
+    """
+    Añade un código de error a un modelo, evitando duplicados
+
+    :code código de error a añadir
+    :error_codes código de errores previos
+    """
+    
+    codes = set((error_codes or '').split(','))
+    codes.add(code)
+    
+    return ','.join(sorted([c for c in codes if c]))

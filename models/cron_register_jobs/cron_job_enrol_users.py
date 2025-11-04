@@ -13,7 +13,7 @@ class CronJobEnrolUsers(models.TransientModel):
   _name = 'maya_core.cron_job_enrol_users'
   
   @staticmethod
-  def enrol_student(self, user, subject_id, course_id):
+  def enrol_student(self, user, subject_id, course_id, only_create: bool = False):
     """
     Matricula a un usuario maya en un módulo
     Si no existe el usuario, lo crea
@@ -21,6 +21,7 @@ class CronJobEnrolUsers(models.TransientModel):
     user: usuario moodle
     subject_id: identificador Maya del módulo
     course_id: identificador Maya del ciclo 
+    only_create: solo crea el usuario si no existe. No lo vincula con el aula
     """
 
     # comprobación: ya está en Maya
@@ -38,6 +39,9 @@ class CronJobEnrolUsers(models.TransientModel):
     else: 
       _logger.info('El estudiante moodle_id:{} ya existe en Maya'.format(user.id_))
       new_student = student[0]
+
+    if only_create:
+      return new_student
 
     enrolled = new_student.subjects_ids.filtered(lambda r: r.subject_id.id == subject_id)
 

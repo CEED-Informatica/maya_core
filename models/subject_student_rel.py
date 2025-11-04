@@ -19,6 +19,10 @@ class SubjectStudentRel(models.Model):
   # número que determina los flags asociados al estado del record
   status_flags = fields.Integer(default = 0) 
 
+  subject_name = fields.Char(related='subject_id.name', string='Módulo | Asignatura', store=False)
+  subject_code = fields.Char(related='subject_id.code', string='Código', store=False)
+  subject_course = fields.Char(related='course_id.code', string='Ciclo', store=False)
+
   _sql_constraints = [ 
     ('unique_subject_student_rel', 'unique(student_id, subject_id, course_id)', 
        'Sólo puede haber una relación por estudiante, ciclo y módulo.'),
