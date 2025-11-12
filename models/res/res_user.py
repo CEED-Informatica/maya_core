@@ -2,7 +2,6 @@
 
 from odoo import fields, models
 
-
 class Users(models.Model):
   """
   Ejemplo de herencia de clase
@@ -14,3 +13,10 @@ class Users(models.Model):
   _inherit = 'res.users'
 
   maya_employee_id = fields.Many2one('maya_core.employee')
+
+  notification_pref_ids = fields.One2many(
+    'maya_core.notification_user_pref', 
+    'user_id', 
+    groups='base.group_user',
+    string='Preferencias de notificaciones Maya'
+  )

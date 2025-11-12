@@ -1,5 +1,17 @@
 <odoo>
   <data>
+    <!-- Cron Jobs -->
+    <record id="maya_core.cron_send_daily_notifications" model="ir.cron">
+      <field name="name">Envía notificaciones diarias a los usuarios</field>
+      <field name="model_id" ref="model_maya_core_notification_manager"/>
+      <field name="state">code</field>
+      <field name="code">model.run_notifications()</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="numbercall">-1</field>
+      <field name="active">True</field>
+    </record> 
+
     <!-- Cron Jobs Templates -->
     <record model="maya_core.cron_register" id="maya_core.cron_register_enrol">
       <field name="name">Matricula alumnos</field>
@@ -11,5 +23,6 @@
       <field name="nextcall_day">school_year.date_init-2</field>
       <field name="nextcall_hour">14:00:00</field>
     </record>
+
   </data>
 </odoo>

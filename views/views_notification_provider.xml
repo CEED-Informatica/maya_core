@@ -1,0 +1,94 @@
+<odoo>
+
+  <!-- Vista Tree -->
+  <record id="maya_core.view_notification_provider_tree" model="ir.ui.view">
+    <field name="name">maya_core.notification_provider.tree</field>
+    <field name="model">maya_core.notification_provider</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="technical_name"/>
+        <field name="is_enabled"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- Vista Form -->
+  <record id="maya_core.view_notification_provider_form" model="ir.ui.view">
+    <field name="name">maya_core.notification_provider.form</field>
+    <field name="model">maya_core.notification_provider</field>
+    <field name="arch" type="xml">
+      <form string="Módulo proveedor de notificaciones">
+        <group>
+          <field name="name"/>
+          <field name="technical_name" readonly="1"/>
+          <field name="is_enabled"/>
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <!-- Muestro la configuración de las notificaciones para el administrador -->
+  <record id="maya_core.view_users_form_inherit_notifications" model="ir.ui.view">
+    <field name="name">maya_core.users_form_notifications</field>
+    <field name="model">res.users</field>
+    <field name="inherit_id" ref="base.view_users_form"/>
+    <field name="arch" type="xml">
+      <!-- Inserto una pestaña nueva justo antes de la pestaña 'Access Rights' -->
+      <xpath expr="//notebook" position="inside">
+        <page string="Notificaciones Maya">
+          <group>
+            <field name="notification_pref_ids">
+              <tree editable="bottom">
+                <field name="provider_id" readonly="1"/>
+                <field name="enabled"/>
+              </tree>
+            </field>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Muestro la configuración de las notificaciones para el usuario -->
+  <record id="maya_core.view_users_simple_form_inherit_notifications" model="ir.ui.view">
+    <field name="name">maya_core.res_users_simple_form_notifications</field>
+    <field name="model">res.users</field>
+    <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+    <field name="arch" type="xml">
+      <xpath expr="//notebook" position="inside">
+        <page string="Notificaciones Maya">
+          <group>
+            <field name="notification_pref_ids">
+              <tree>
+                <field name="provider_id" readonly="1"/>
+                <field name="enabled"/>
+              </tree>
+            </field>
+          </group>
+        </page>
+      </xpath>
+    </field>
+</record>
+
+  <!-- Acción -->
+  <record id="maya_core.action_notification_provider" model="ir.actions.act_window">
+    <field name="name">Módulos que notifican</field>
+    <field name="res_model">maya_core.notification_provider</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- Menú padre dentro de Ajustes -->
+  <menuitem id="maya_core.menu_notification_root"
+            name="Notificaciones"
+            parent="base.menu_administration"
+            sequence="90"/>
+
+  <!-- Menú secundario -->
+  <menuitem id="maya_core.menu_notification_providers"
+            name="Módulos proveedores de notificaciones"
+            parent="maya_core.menu_notification_root"
+            action="maya_core.action_notification_provider"
+            sequence="1"/>
+
+</odoo>

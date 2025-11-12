@@ -1,0 +1,10 @@
+<odoo>
+  <template id="maya_core.notification_group_header">
+    <p class="font-weight: 400; 
+        font-size: 0.86rem; 
+        line-height: 1.333; 
+        letter-spacing: 0.02em;">
+        <strong><t t-esc="name"/></strong>
+    </p>
+  </template>
+</odoo>

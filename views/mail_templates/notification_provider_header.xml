@@ -1,0 +1,25 @@
+<odoo>
+  <template id="maya_core.notification_provider_header">
+    <table class="module-provider-card" role="presentation" style="
+          border-collapse: collapse;
+          width: 60%; 
+          margin-top: 15px;
+          margin-bottom: 15px;
+          margin-left: 0; 
+          margin-right: auto; 
+          border: 1px solid #ccc;
+          font-size: 13px;
+          -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.1);
+          box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.1);
+        ">
+          <tr><td class="provider-card-header" style="
+            background-color: #875a7b; 
+            padding: 10px 12px;
+            font-weight: bold;
+            font-size: 14px;
+            border-bottom: 1px solid #ccc;
+            color: #ccc;
+          "><t t-esc="name"/></td></tr>
+    </table>
+  </template>
+</odoo>

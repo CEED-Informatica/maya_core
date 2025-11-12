@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="maya_core.email_template_notificacion_maya_users" model="mail.template">
+      <field name="name">Plantilla mail para notificaciones de tareas a usuarios de Maya</field>
+      <field name="model_id" ref="model_maya_core_employee"/>
+      <field name="subject">[Maya] Resumen de tareas pendientes</field>
+      <field name="auto_delete" eval="True"/>
+      <field name="body_html"><![CDATA[
+<div style="margin: 0px; padding: 0px;">
+  <style>
+    /* Utilizo pixels como unidad ya que es más seguro pensando en que es un mail */
+    /* El lector de correos puede generar div que no puedo controlar */
+
+    /* Estilos para las tarjetas de módulo */
+    .module-provider-card {
+      border-collapse: collapse;
+      width: 60%; 
+      margin-top: 15px;
+      margin-bottom: 15px;
+      margin-left: 0; 
+      margin-right: auto; 
+      border: 1px solid #ccc;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.1);
+      box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.1);
+    }
+
+    .provider-card-header {
+      background-color: #875a7b; 
+      padding: 10px 12px;
+      font-weight: bold;
+      font-size: 14px;
+      border-bottom: 1px solid #ccc;
+      color: #ccc;
+    }
+  </style>
+  <p>Hola <t t-raw="object.name"/>,<br/></p>
+  <p>Este es el listado de tus notificaciones y tareas pendientes en Maya de hoy <t t-raw="ctx.get('today')"/>.</p>
+  
+  <t t-raw="ctx.get('body_html_dynamic')"/>
+
+  <div style="height: 7px; line-height: 7x; font-size: 7px;">&nbsp;</div>
+  <p>Si deseas ajustar tus notificaciones, puedes hacerlo desde el menú de <em>Preferencias/Notificaciones Maya</em>.</p>
+
+  <p>Saludos</p>
+  <div>
+    <small><strong>Declaración de privacidad</strong></small><br>
+    <small>Este correo electrónico se genera mediante el uso de Maya a través de Odoo ERP y puede contener contenido controlado por la Conselleria d'Educació.</small>
+  </div>
+</div>
+]]></field>
+    </record>
+
+  </data>
+</odoo>

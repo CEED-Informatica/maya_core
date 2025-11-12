@@ -15,6 +15,7 @@ from . import cron_register
 from . import ir
 from . import res
 from . import cron_register_jobs
+from . import notifications
 from . import config_settings
 from . import subject_student_rel
 from . import subject_classroom_rel

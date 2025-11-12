@@ -10,7 +10,8 @@
         Módulo que simplifica y automatiza el trabajo de un centro de Ciclos Formativos a distancia.
         Implementa la funcionalidad básica que será utilizada por otras extensiones como:
          - Maya | Valid: gestión de las convalidaciones,
-         - Maya | Report: Generación de informes
+         - Maya | Report: generación de informes
+         - Maya | Students: gestión de tareas relativas a estudiantes: anulaciones...
 
         Este módulo permite entre otras cosas
          - Control de profesores y sus roles
@@ -18,6 +19,7 @@
          - Generación automática de calendiario escolar
          - Gestión de las aulas virtuales
          - Gestión de las tareas automatizadas (CronJobs)
+         - Gestión de las notificaciones (ebnvio de mails) al profesorado
          ...
     """,
 
@@ -48,8 +50,13 @@
         'security/ir.model.access.csv',
         # vistas
         'views/views.xml',
+        'views/views_notification_provider.xml',
         'views/config_settings_view.xml',
         'views/templates.xml',
+        # mails
+        'views/mail_templates/mail_notification_maya_users.xml',
+        'views/mail_templates/notification_provider_header.xml',
+        'views/mail_templates/notification_group_header.xml',
         # datos de modelos
         'data/config/config_data.xml',
         'data/school.xml',
