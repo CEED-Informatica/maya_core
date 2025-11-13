@@ -41,7 +41,7 @@
   
   <t t-raw="ctx.get('body_html_dynamic')"/>
 
-  <div style="height: 7px; line-height: 7x; font-size: 7px;">&nbsp;</div>
+  <div style="height: 12px; line-height: 12x; font-size: 12px;">&nbsp;</div>
   <p>Si deseas ajustar tus notificaciones, puedes hacerlo desde el menú de <em>Preferencias/Notificaciones Maya</em>.</p>
 
   <p>Saludos</p>
