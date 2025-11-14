@@ -23,4 +23,4 @@ class NotificationItem(models.Model):
         ('3', _('Crítica')) 
     ], default='1')
    
-    link_objects = fields.Json(string="Id de los objetos implicados en la notificación")
+    link_objects = fields.Json(string="URL de los objetos implicados en la notificación")

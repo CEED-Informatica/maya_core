@@ -62,7 +62,11 @@ class NotificationManager(models.Model):
           body_html_dynamic=body_html
       ).send_mail(
           user.maya_employee_id.id,
-          force_send=False
+          force_send=False,
+          email_values={
+            'email_to': user.email,
+            #'email_from': 'Notificaciones Maya <notificaciones@tu_dominio.com>',
+         }
       )
 
     return 
