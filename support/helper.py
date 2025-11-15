@@ -214,3 +214,27 @@ def add_error_code(code: str, error_codes: str) -> str:
     codes.add(code)
     
     return ','.join(sorted([c for c in codes if c]))
+
+
+def get_mail_server(self, alias: str):
+    """
+    Busca y devuelve el mail.server del alias indicado (o lanza UserError).
+
+    :alias alias del correo a enviar la notificación
+    """
+    
+    if alias.upper() == 'CENTRO': 
+      param='maya_core.alias_mail_center'
+    elif alias.upper() == 'MAYA': 
+      param='maya_core.alias_maya_mail'
+    else:
+      raise UserError(f'El alias {alias} no existe como servidor de correo .')
+       
+    mail_alias = self.env['ir.config_parameter'].get_param(param)
+    if not mail_alias:
+        raise UserError(f'No se ha definido el servidor de correo de {alias} (param: {param}).')
+    mail_server = self.env['ir.mail_server'].search([('name', '=', mail_alias)], limit=1)
+    if not mail_server:
+        raise UserError(f"No se encontró el servidor de correo '{mail_alias}' en ir.mail_server.")
+    
+    return mail_server

@@ -1,6 +1,8 @@
 from odoo import models, api
 from datetime import date
 
+from ....maya_core.support.helper import get_mail_server
+
 class NotificationManager(models.Model):
   """
   Gestiona la ejecución de las notificaciones
@@ -50,6 +52,8 @@ class NotificationManager(models.Model):
 
     providers = self.env['maya_core.notification_provider'].search([('is_enabled', '=', True)])
 
+    mail_server = get_mail_server(self, 'maya')
+
     for user in users:
       body_html = self.build_email_body_for_user(user, providers)
 
@@ -65,7 +69,7 @@ class NotificationManager(models.Model):
           force_send=False,
           email_values={
             'email_to': user.email,
-            #'email_from': 'Notificaciones Maya <notificaciones@tu_dominio.com>',
+            'email_from': f'"Notificaciones Maya" <{mail_server.smtp_user}>',
          }
       )
 
