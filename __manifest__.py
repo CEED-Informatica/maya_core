@@ -34,13 +34,20 @@
     'price': 0,
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'mail_bot' ,'maya_report'],
+    'depends': ['base', 'web', 'mail', 'mail_bot' ,'maya_report'],
 
     # external dependencies that have to be installed. Can be python or bin dependencies
     # Only checks whether the dependency is installed. Not install the dependency!!
     'external_dependencies': {
        'python': ['moodleteacher', 'toolz'],
     },
+
+    'assets': {
+        'web.assets_backend': [
+            'maya_core/static/src/js/tab_switcher.js',
+        ],
+    },
+
     # always loaded
     'data': [
         # seguridad
