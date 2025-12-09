@@ -1,8 +1,23 @@
 <odoo>
   <data>
+    <record model="maya_core.rol" id="maya_core.rol_DIRECTOR">
+      <field name="rol">DIRECTOR</field>
+      <field name="description">Dirección</field>
+    </record>
+
     <record model="maya_core.rol" id="maya_core.rol_JEFCF">
       <field name="rol">JFCF</field>
       <field name="description">Jefatura de Estudios de Ciclos Formativos</field>
+    </record>
+
+    <record model="maya_core.rol" id="maya_core.rol_JEFBCH">
+      <field name="rol">JFBCH</field>
+      <field name="description">Jefatura de Estudios de Bachillerato</field>
+    </record>
+
+    <record model="maya_core.rol" id="maya_core.rol_JEFFPA">
+      <field name="rol">JFFPA</field>
+      <field name="description">Jefatura de Estudios de Formación para Adultos</field>
     </record>
 
     <record model="maya_core.rol" id="maya_core.rol_COORDCF">
